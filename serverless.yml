@@ -32,7 +32,7 @@ functions:
   reverse:
     environment:
       FUNCTION_NAME: 'reverse'
-    handler: uk.co.mruoc.StringHandlers
+    handler: uk.co.mruoc.CloudHandler
     name: ${self:custom.lambdas.reverse.name}
     events:
       - http:
@@ -42,7 +42,7 @@ functions:
   greet:
     environment:
       FUNCTION_NAME: 'greet'
-    handler: uk.co.mruoc.StringHandlers
+    handler: uk.co.mruoc.CloudHandler
     name: ${self:custom.lambdas.greet.name}
     events:
       - http:
