@@ -1,0 +1,50 @@
+service: spring-cloud-function
+
+custom:
+  defaultStage: dev
+  defaultRegion: eu-west-1
+  defaultVersion: 1.0.0-SNAPSHOT
+
+  stage: ${opt:stage, self:custom.defaultStage}
+  region: ${opt:region, self:custom.defaultRegion}
+  version: ${opt:version, self:custom.defaultVersion}
+
+  lambdas:
+    reverse:
+      name: ${self:custom.stage}-reverse
+
+    greet:
+      name: ${self:custom.stage}-greet
+
+provider:
+  name: aws
+  runtime: java8
+  stage: ${self:custom.stage}
+  region: ${self:custom.region}
+  timeout: 15
+  environment:
+    STAGE: ${self:custom.stage}
+
+package:
+  artifact: target/spring-cloud-function-${self:custom.version}-aws.jar
+
+functions:
+  reverse:
+    environment:
+      FUNCTION_NAME: 'reverse'
+    handler: uk.co.mruoc.StringHandlers
+    name: ${self:custom.lambdas.reverse.name}
+    events:
+      - http:
+          path: reverse
+          method: post
+
+  greet:
+    environment:
+      FUNCTION_NAME: 'greet'
+    handler: uk.co.mruoc.StringHandlers
+    name: ${self:custom.lambdas.greet.name}
+    events:
+      - http:
+          path: greet
+          method: post
