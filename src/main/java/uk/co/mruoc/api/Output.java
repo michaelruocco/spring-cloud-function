@@ -1,4 +1,4 @@
-package uk.co.mruoc;
+package uk.co.mruoc.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

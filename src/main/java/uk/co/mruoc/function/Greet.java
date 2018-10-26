@@ -1,15 +1,12 @@
 package uk.co.mruoc.function;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.mruoc.AbstractFunction;
-import uk.co.mruoc.DefaultResponse;
-import uk.co.mruoc.Input;
-import uk.co.mruoc.Output;
-import uk.co.mruoc.Request;
-import uk.co.mruoc.Response;
+import uk.co.mruoc.api.Input;
+import uk.co.mruoc.api.Output;
 
 @Slf4j
-public class Greet extends AbstractFunction<Input, Output> {
+public class Greet extends AbstractAwsLambdaFunction<Input, Output> {
 
     public Greet() {
         super(Input.class);
@@ -23,7 +20,7 @@ public class Greet extends AbstractFunction<Input, Output> {
     }
 
     private Response<Output> toResponse(Output body) {
-        return DefaultResponse.<Output>builder()
+        return BasicResponse.<Output>builder()
                 .statusCode(200)
                 .body(body)
                 .build();

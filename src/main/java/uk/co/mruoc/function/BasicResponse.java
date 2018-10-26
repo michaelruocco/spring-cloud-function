@@ -1,4 +1,4 @@
-package uk.co.mruoc;
+package uk.co.mruoc.function;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.util.Map;
 @Getter
 @Builder
 @ToString
-public class DefaultResponse<O> implements Response<O> {
+public class BasicResponse<O> implements Response<O> {
 
     private final O body;
     private final int statusCode;
