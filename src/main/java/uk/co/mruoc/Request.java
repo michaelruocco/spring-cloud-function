@@ -1,14 +1,15 @@
 package uk.co.mruoc;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Map;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Request {
+public interface Request<I> {
 
-    private String value;
+    Map<String, String> getHeaders();
+
+    I getBody();
+
+    Map<String, String> getPathParameters();
+
+    Map<String, String> getQueryStringParameters();
 
 }
