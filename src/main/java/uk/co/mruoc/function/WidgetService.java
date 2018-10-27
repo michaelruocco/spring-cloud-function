@@ -8,6 +8,8 @@ public interface WidgetService {
 
     Optional<Widget> getWidget(long id);
 
+    boolean exists(long id);
+
     Widget createWidget(Widget widget);
 
 }

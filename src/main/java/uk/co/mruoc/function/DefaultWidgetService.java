@@ -22,12 +22,13 @@ public class DefaultWidgetService implements WidgetService {
     }
 
     @Override
+    public boolean exists(long id) {
+        return repository.existsById(id);
+    }
+
+    @Override
     public Widget createWidget(Widget widget) {
         Long id = widget.getId();
-        if (repository.existsById(id)) {
-            log.info("widget already exists with id {}", id);
-            throw new WidgetAlreadyExistsException(id);
-        }
         repository.save(widget);
         Optional<Widget> created = repository.findById(id);
         return created.orElseThrow(() -> new UnexpectedErrorException("create widget failed"));

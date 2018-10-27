@@ -17,5 +17,6 @@ public class BasicRequest<I> implements Request<I> {
     private final Map<String, String> headers;
     private final Map<String, String> pathParameters;
     private final Map<String, String> queryStringParameters;
+    private final String uri;
 
 }

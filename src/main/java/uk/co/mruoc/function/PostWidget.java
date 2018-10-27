@@ -8,6 +8,9 @@ import uk.co.mruoc.Response;
 import uk.co.mruoc.api.WidgetDocument;
 import uk.co.mruoc.model.Widget;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PostWidget extends AbstractAwsLambdaFunction<WidgetDocument, WidgetDocument> {
 
     private final WidgetConverter converter = new WidgetConverter();
@@ -22,15 +25,31 @@ public class PostWidget extends AbstractAwsLambdaFunction<WidgetDocument, Widget
     @Override
     public Response<WidgetDocument> apply(Request<WidgetDocument> request) {
         Widget widget = converter.toModel(request.getBody());
+        int statusCode = getStatusCode(widget.getId());
         Widget createdWidget = service.createWidget(widget);
-        return toResponse(createdWidget);
+        String uri = buildResourceUri(request.getUri(), createdWidget.getId());
+        return toResponse(statusCode, createdWidget, uri);
     }
 
-    private Response<WidgetDocument> toResponse(Widget body) {
+    private Response<WidgetDocument> toResponse(int statusCode, Widget body, String uri) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Location", uri);
         return BasicResponse.<WidgetDocument>builder()
-                .statusCode(201)
+                .statusCode(statusCode)
                 .body(converter.toDocument(body))
+                .headers(headers)
                 .build();
+    }
+
+    private String buildResourceUri(String baseUri, long id) {
+        return String.format("%s/%s", baseUri, id);
+    }
+
+    private int getStatusCode(long id) {
+        if (service.exists(id)) {
+            return 200;
+        }
+        return 201;
     }
 
 }

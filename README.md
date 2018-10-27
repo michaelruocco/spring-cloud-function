@@ -21,31 +21,32 @@ in read:
 
 ```
 endpoints:
-   POST - https://{your_api_gateway_endpoint}/dev/reverse
-   POST - https://{your_api_gateway_endpoint}/dev/greet
+   GET - https://{your_api_gateway_endpoint}/dev/widgets/{id}
+   POST - https://{your_api_gateway_endpoint}/dev/widgets
 ```
 
 If the command has completed successfully you can then test your functions calling through the API
 gateway by running the following command:
 
 ```
-curl https://{your_api_gateway_endpoint}/dev/greet -d '{ "value": "Joe Bloggs" }'
-curl https://{your_api_gateway_endpoint}/dev/reverse -d '{ "value": "Joe Bloggs" }'
+curl -X POST https://{your_api_gateway_endpoint}/dev/widgets -d '{ "id": 3, "description": "widget 3", "cost": { "amount": 6, "currency": "GBP" }, "price": { "amount": 22, "currency": "GBP" } }'
+curl -X GET https://{your_api_gateway_endpoint}/dev/widgets/3
 ```
 
-Should return:
+Should both return:
 
 ```
-{"value":"Hello Joe Bloggs, and welcome to Spring Cloud Function!!!"}
-{"value":"sggolB eoJ"}
+{ "id": 3, "description": "widget 3", "cost": { "amount": 6, "currency": "GBP" }, "price": { "amount": 22, "currency": "GBP" } }
 ```
 
 Bare in mind that the first time each service is called it will be performing a "cold start" so will
-likely take between 10-12 seconds to respond, following that you should get a much quicker response.
+likely take between 16-18 seconds to respond, following that you should get a much quicker response.
 
 ## Running Locally
 
-To run and test locally you can either run directly from maven
+To run and test locally you can either run directly from maven - NOTE this still requires
+additional work now that dynamo db is being used in the code, so this is currently broken,
+but I will be looking to fix it shortly.
 
 ```
 mvn clean install exec:java
@@ -62,15 +63,15 @@ In either case, when once the server is up and running you can send requests to 
 there is no API gateway running on your local machine you have to send a more complex request, because
 you need to mimic the work that is done by the API Gateway.
 
-```
-curl http://localhost:8080/greet -H "Content-Type: application/json" -d '{ "body": "{\"value\":\"Joe Bloggs\"}" }'
-curl http://localhost:8080/reverse -H "Content-Type: application/json" -d '{ "body": "{\"value\":\"Joe Bloggs\"}" }'
-```
+TODO example requests to be added here.
 
-However, both of these requests strangely fail when running locally for the same reason, the body value
-field does not seem to be picked up correctly and so is always reported as null, this means that the first
-curl request listed above returns a message containing "null" instead of the value passed in, and the second
-request fails with an error because a StringBuilder cannot take a null argument. Further investigation is required
-as to why this is happening. I suspect that I am using an old/incorrect or buggy version of one of libraries, or
-I have uncovered a bug that needs fixing. I intend to start by raising an issue against the Spring Cloud Functions
-project and then will go from there.
+## Things still to do
+
+* Running locally connected to local dynamo db needs to be fixed (probably by using docker)
+* Request and response bodies needs to be updated to follow JSON API spec
+* Add ID field to error response documents to follow JSON API spec
+* Cucumber tests to be added
+* Add validation for incoming payload on POST request
+* Add functionality for PATCH and DELETE endpoints
+* Tests for AbstractAwsLambdaFunction will be removed when it is extracted into separate library and only functions will be unit tested
+* Look into how to secure an API in API gateway

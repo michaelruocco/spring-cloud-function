@@ -12,4 +12,6 @@ public interface Request<I> {
 
     Map<String, String> getQueryStringParameters();
 
+    String getUri();
+
 }

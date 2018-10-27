@@ -7,7 +7,6 @@ import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DeleteTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.util.TableUtils;
-import org.javamoney.moneta.Money;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -20,6 +19,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.co.mruoc.Application;
+import uk.co.mruoc.model.FakeWidget;
 import uk.co.mruoc.model.Widget;
 
 import java.util.List;
@@ -73,7 +73,7 @@ public class WidgetRepositoryTest {
 
     @Test
     public void shouldPersistWidget() {
-        Widget widget = new Widget(1L, "my widget", Money.of(10, "GBP"), Money.of(12, "GBP"));
+        Widget widget = new FakeWidget();
         repository.save(widget);
 
         List<Widget> result = (List<Widget>) repository.findAll();

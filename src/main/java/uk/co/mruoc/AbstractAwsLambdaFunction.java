@@ -49,10 +49,12 @@ public abstract class AbstractAwsLambdaFunction<I, O> implements Function<APIGat
     private Request<I> toRequest(APIGatewayProxyRequestEvent event) {
         String json = event.getBody();
         I body = toRequestBodyObject(json);
+        String uri = extractUri(event);
         return BasicRequest.<I>builder()
                 .headers(event.getHeaders())
                 .pathParameters(event.getPathParameters())
                 .queryStringParameters(event.getQueryStringParameters())
+                .uri(uri)
                 .body(body)
                 .build();
     }
@@ -66,6 +68,13 @@ public abstract class AbstractAwsLambdaFunction<I, O> implements Function<APIGat
         } catch (IOException e) {
             throw new InvalidJsonException(e, json);
         }
+    }
+
+    private String extractUri(APIGatewayProxyRequestEvent event) {
+        String hostname = event.getHeaders().get("Host");
+        String stage = event.getRequestContext().getStage();
+        String resource = event.getResource();
+        return String.format("https://%s/%s%s", hostname, stage, resource);
     }
 
     private APIGatewayProxyResponseEvent toEvent(Response<O> response) {
