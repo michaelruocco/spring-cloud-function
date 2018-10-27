@@ -6,6 +6,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Profile;
         dynamoDBMapperConfigRef = "dynamoDBMapperConfig",
         basePackages = {"uk.co.mruoc.repository"}
 )
+@Slf4j
 public class LocalDynamoDbConfig {
 
     @Value("${aws.dynamodb.endpoint:#{null}}")
@@ -34,6 +36,7 @@ public class LocalDynamoDbConfig {
     @Bean
     @Profile("local")
     public AmazonDynamoDB amazonDynamoDB(AWSCredentials credentials) {
+        log.info("setting up local dynamodb config with endpoint {}", endpoint);
         return AmazonDynamoDBClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .withEndpointConfiguration(new EndpointConfiguration(endpoint, region))

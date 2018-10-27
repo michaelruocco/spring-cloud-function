@@ -16,17 +16,17 @@ custom:
     postWidget:
       name: ${self:custom.stage}-postWidget
 
-    dynamoTables:
-      player:
-        name: ${self:custom.stage}-widget
-        arn: { "Fn::Join" : ["", ["arn:aws:dynamodb:${self:custom.region}:", { "Ref" : "AWS::AccountId" }, ":table/${self:custom.dynamoTables.widget.name}" ] ] }
+  dynamoTables:
+    widget:
+      name: ${self:custom.stage}-widget
+      arn: { "Fn::Join" : ["", ["arn:aws:dynamodb:${self:custom.region}:", { "Ref" : "AWS::AccountId" }, ":table/${self:custom.dynamoTables.widget.name}" ] ] }
 
 provider:
   name: aws
   runtime: java8
   stage: ${self:custom.stage}
   region: ${self:custom.region}
-  timeout: 15
+  timeout: 20
   environment:
     STAGE: ${self:custom.stage}
     REGION: ${self:custom.region}
@@ -72,7 +72,7 @@ resources:
         AttributeDefinitions:
           -
             AttributeName: id
-            AttributeType: S
+            AttributeType: N
         KeySchema:
           -
             AttributeName: id

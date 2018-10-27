@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class WidgetDocument {
 
-    private long id;
+    private Long id;
     private String description;
     private MonetaryAmount cost;
     private MonetaryAmount price;

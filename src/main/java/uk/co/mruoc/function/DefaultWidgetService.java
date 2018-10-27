@@ -23,7 +23,7 @@ public class DefaultWidgetService implements WidgetService {
 
     @Override
     public Widget createWidget(Widget widget) {
-        long id = widget.getId();
+        Long id = widget.getId();
         if (repository.existsById(id)) {
             log.info("widget already exists with id {}", id);
             throw new WidgetAlreadyExistsException(id);
