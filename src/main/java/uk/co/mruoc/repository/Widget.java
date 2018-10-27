@@ -3,6 +3,7 @@ package uk.co.mruoc.repository;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 import org.javamoney.moneta.Money;
 
 @DynamoDBTable(tableName = "widget")
@@ -43,6 +44,7 @@ public class Widget {
     }
 
     @DynamoDBAttribute
+    @DynamoDBTypeConverted(converter = MoneyTypeConverter.class)
     public Money getCost() {
         return cost;
     }
@@ -52,8 +54,9 @@ public class Widget {
     }
 
     @DynamoDBAttribute
+    @DynamoDBTypeConverted(converter = MoneyTypeConverter.class)
     public Money getPrice() {
-        return cost;
+        return price;
     }
 
     public void setPrice(Money price) {
