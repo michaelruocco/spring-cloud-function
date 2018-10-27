@@ -10,11 +10,11 @@ custom:
   version: ${opt:version, self:custom.defaultVersion}
 
   lambdas:
-    reverse:
-      name: ${self:custom.stage}-reverse
+    getWidget:
+      name: ${self:custom.stage}-getWidget
 
-    greet:
-      name: ${self:custom.stage}-greet
+    postWidget:
+      name: ${self:custom.stage}-postWidget
 
 provider:
   name: aws
@@ -29,22 +29,22 @@ package:
   artifact: target/spring-cloud-function-${self:custom.version}-aws.jar
 
 functions:
-  reverse:
+  getWidget:
     environment:
-      FUNCTION_NAME: 'reverse'
+      FUNCTION_NAME: 'getWidget'
     handler: uk.co.mruoc.CloudHandler
-    name: ${self:custom.lambdas.reverse.name}
+    name: ${self:custom.lambdas.getWidget.name}
     events:
       - http:
-          path: reverse
-          method: post
+          path: widgets/{id}
+          method: get
 
-  greet:
+  postWidget:
     environment:
-      FUNCTION_NAME: 'greet'
+      FUNCTION_NAME: 'postWidget'
     handler: uk.co.mruoc.CloudHandler
-    name: ${self:custom.lambdas.greet.name}
+    name: ${self:custom.lambdas.postWidget.name}
     events:
       - http:
-          path: greet
+          path: widgets
           method: post

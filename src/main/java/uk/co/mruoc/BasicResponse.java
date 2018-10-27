@@ -1,10 +1,12 @@
-package uk.co.mruoc.function;
+package uk.co.mruoc;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.util.Map;
+
+import static java.util.Collections.emptyMap;
 
 @Getter
 @Builder
@@ -13,6 +15,6 @@ public class BasicResponse<O> implements Response<O> {
 
     private final O body;
     private final int statusCode;
-    private final Map<String, String> headers;
+    @Builder.Default private final Map<String, String> headers = emptyMap();
 
 }

@@ -1,4 +1,4 @@
-package uk.co.mruoc.function;
+package uk.co.mruoc;
 
 import java.util.Map;
 

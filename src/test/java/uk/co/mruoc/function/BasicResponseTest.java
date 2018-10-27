@@ -1,8 +1,8 @@
 package uk.co.mruoc.function;
 
 import org.junit.Test;
-import uk.co.mruoc.function.BasicResponse;
-import uk.co.mruoc.function.Response;
+import uk.co.mruoc.BasicResponse;
+import uk.co.mruoc.Response;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +48,7 @@ public class BasicResponseTest {
     public void shouldPrintFieldsFromToString() {
         Response<Object> response = BasicResponse.builder().build();
 
-        assertThat(response.toString()).isEqualTo("BasicResponse(body=null, statusCode=0, headers=null)");
+        assertThat(response.toString()).isEqualTo("BasicResponse(body=null, statusCode=0, headers={})");
     }
 
 }

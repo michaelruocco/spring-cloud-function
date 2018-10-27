@@ -1,8 +1,8 @@
 package uk.co.mruoc.function;
 
 import org.junit.Test;
-import uk.co.mruoc.function.BasicRequest;
-import uk.co.mruoc.function.Request;
+import uk.co.mruoc.BasicRequest;
+import uk.co.mruoc.Request;
 
 import java.util.HashMap;
 import java.util.Map;
