@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DeleteTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.util.TableUtils;
+import org.javamoney.moneta.Money;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -31,6 +32,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
         "aws.dynamodb.endpoint=http://localhost:8000/",
         "aws.region=eu-west-1",
+        "aws.accessKey=123",
+        "aws.secretKey=123",
         "STAGE=test",
         "REGION=eu-west-1"
 })
@@ -69,7 +72,7 @@ public class WidgetRepositoryTest {
 
     @Test
     public void shouldPersistWidget() {
-        Widget widget = new Widget();
+        Widget widget = new Widget(1L, "my widget", Money.of(10, "GBP"), Money.of(12, "GBP"));
         repository.save(widget);
 
         List<Widget> result = (List<Widget>) repository.findAll();
