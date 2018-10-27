@@ -1,18 +1,21 @@
-package uk.co.mruoc.repository;
+package uk.co.mruoc.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 import org.javamoney.moneta.Money;
+import uk.co.mruoc.repository.MonetaryAmountTypeConverter;
+
+import javax.money.MonetaryAmount;
 
 @DynamoDBTable(tableName = "widget")
 public class Widget {
 
     private long id;
     private String description;
-    private Money cost;
-    private Money price;
+    private MonetaryAmount cost;
+    private MonetaryAmount price;
 
     public Widget() {
         // intentionally blank
@@ -44,22 +47,22 @@ public class Widget {
     }
 
     @DynamoDBAttribute
-    @DynamoDBTypeConverted(converter = MoneyTypeConverter.class)
-    public Money getCost() {
+    @DynamoDBTypeConverted(converter = MonetaryAmountTypeConverter.class)
+    public MonetaryAmount getCost() {
         return cost;
     }
 
-    public void setCost(Money cost) {
+    public void setCost(MonetaryAmount cost) {
         this.cost = cost;
     }
 
     @DynamoDBAttribute
-    @DynamoDBTypeConverted(converter = MoneyTypeConverter.class)
-    public Money getPrice() {
+    @DynamoDBTypeConverted(converter = MonetaryAmountTypeConverter.class)
+    public MonetaryAmount getPrice() {
         return price;
     }
 
-    public void setPrice(Money price) {
+    public void setPrice(MonetaryAmount price) {
         this.price = price;
     }
 

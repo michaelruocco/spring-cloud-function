@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableDynamoDBRepositories(
         dynamoDBMapperConfigRef = "dynamoDBMapperConfig",
-        basePackages = {"uk.co.mruoc.repository", "uk.co.mruoc.model"}
+        basePackages = {"uk.co.mruoc.repository"}
 )
 public class DefaultDynamoDbConfig {
 
@@ -42,9 +42,6 @@ public class DefaultDynamoDbConfig {
         DynamoDBMapperConfig.Builder builder = new DynamoDBMapperConfig.Builder();
         builder.setTableNameOverride(tableNameOverrider);
         return builder.build();
-        // Sadly this is a @deprecated method but new DynamoDBMapperConfig.Builder()
-        // is incomplete compared to DynamoDBMapperConfig.DEFAULT
-        //return new DynamoDBMapperConfig(DynamoDBMapperConfig.DEFAULT, builder.build());
     }
 
     @Bean

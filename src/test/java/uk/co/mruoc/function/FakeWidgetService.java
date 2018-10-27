@@ -2,30 +2,28 @@ package uk.co.mruoc.function;
 
 import lombok.extern.slf4j.Slf4j;
 import org.javamoney.moneta.Money;
-import org.springframework.stereotype.Component;
-import uk.co.mruoc.api.WidgetDocument;
+import uk.co.mruoc.model.Widget;
 
 import java.util.Optional;
 
 @Slf4j
-@Component
 public class FakeWidgetService implements WidgetService {
 
     @Override
-    public Optional<WidgetDocument> getWidget(long id) {
+    public Optional<Widget> getWidget(long id) {
         log.info("getting widget with id {}", id);
         if (shouldSucceed(id)) {
-            return Optional.of(buildDocument(id));
+            return Optional.of(buildModel(id));
         }
         log.info("no widgets found with id {}", id);
         return Optional.empty();
     }
 
     @Override
-    public Optional<WidgetDocument> createWidget(WidgetDocument widget) {
+    public Widget createWidget(Widget widget) {
         long id = widget.getId();
         if (shouldSucceed(id)) {
-            return Optional.of(widget);
+            return widget;
         }
         log.info("widget already exists with id {}", id);
         throw new WidgetAlreadyExistsException(id);
@@ -35,8 +33,8 @@ public class FakeWidgetService implements WidgetService {
         return !Long.toString(id).endsWith("3");
     }
 
-    private static WidgetDocument buildDocument(long id) {
-        WidgetDocument widget = new WidgetDocument();
+    private static Widget buildModel(long id) {
+        Widget widget = new Widget();
         widget.setId(id);
         widget.setDescription("widget " + id);
         widget.setCost(Money.of(id + 10, "GBP"));

@@ -6,8 +6,11 @@ import uk.co.mruoc.BasicResponse;
 import uk.co.mruoc.Request;
 import uk.co.mruoc.Response;
 import uk.co.mruoc.api.WidgetDocument;
+import uk.co.mruoc.model.Widget;
 
 public class PostWidget extends AbstractAwsLambdaFunction<WidgetDocument, WidgetDocument> {
+
+    private final WidgetConverter converter = new WidgetConverter();
 
     @Autowired
     private WidgetService service;
@@ -18,15 +21,15 @@ public class PostWidget extends AbstractAwsLambdaFunction<WidgetDocument, Widget
 
     @Override
     public Response<WidgetDocument> apply(Request<WidgetDocument> request) {
-        WidgetDocument widget = request.getBody();
-        service.createWidget(widget);
-        return toResponse(widget);
+        Widget widget = converter.toModel(request.getBody());
+        Widget createdWidget = service.createWidget(widget);
+        return toResponse(createdWidget);
     }
 
-    private Response<WidgetDocument> toResponse(WidgetDocument body) {
+    private Response<WidgetDocument> toResponse(Widget body) {
         return BasicResponse.<WidgetDocument>builder()
                 .statusCode(201)
-                .body(body)
+                .body(converter.toDocument(body))
                 .build();
     }
 

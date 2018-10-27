@@ -7,12 +7,15 @@ import uk.co.mruoc.BasicResponse;
 import uk.co.mruoc.Request;
 import uk.co.mruoc.Response;
 import uk.co.mruoc.api.WidgetDocument;
+import uk.co.mruoc.model.Widget;
 
 import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
 public class GetWidget extends AbstractAwsLambdaFunction<Object, WidgetDocument> {
+
+    private final WidgetConverter converter = new WidgetConverter();
 
     @Autowired
     private WidgetService service;
@@ -25,7 +28,7 @@ public class GetWidget extends AbstractAwsLambdaFunction<Object, WidgetDocument>
     public Response<WidgetDocument> apply(Request<Object> request) {
         long id = extractId(request);
         log.info("extract id {} from request ", id);
-        Optional<WidgetDocument> widget = service.getWidget(id);
+        Optional<Widget> widget = service.getWidget(id);
         if (widget.isPresent()) {
             return toResponse(widget.get());
         }
@@ -40,10 +43,10 @@ public class GetWidget extends AbstractAwsLambdaFunction<Object, WidgetDocument>
         throw new IdNotProvidedException();
     }
 
-    private Response<WidgetDocument> toResponse(WidgetDocument body) {
+    private Response<WidgetDocument> toResponse(Widget widget) {
         return BasicResponse.<WidgetDocument>builder()
                 .statusCode(200)
-                .body(body)
+                .body(converter.toDocument(widget))
                 .build();
     }
 

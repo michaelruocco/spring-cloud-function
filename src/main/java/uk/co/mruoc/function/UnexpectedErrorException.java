@@ -8,4 +8,8 @@ public class UnexpectedErrorException extends AbstractException {
         super(cause, 500, "an unexpected error occurred", "UNEXPECTED_ERROR");
     }
 
+    public UnexpectedErrorException(String title) {
+        super(500, title, "UNEXPECTED_ERROR");
+    }
+
 }

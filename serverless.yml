@@ -16,6 +16,11 @@ custom:
     postWidget:
       name: ${self:custom.stage}-postWidget
 
+    dynamoTables:
+      player:
+        name: ${self:custom.stage}-widget
+        arn: { "Fn::Join" : ["", ["arn:aws:dynamodb:${self:custom.region}:", { "Ref" : "AWS::AccountId" }, ":table/${self:custom.dynamoTables.widget.name}" ] ] }
+
 provider:
   name: aws
   runtime: java8
@@ -24,6 +29,15 @@ provider:
   timeout: 15
   environment:
     STAGE: ${self:custom.stage}
+    REGION: ${self:custom.region}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:Scan
+      Resource: ${self:custom.dynamoTables.widget.arn}
 
 package:
   artifact: target/spring-cloud-function-${self:custom.version}-aws.jar
@@ -48,3 +62,22 @@ functions:
       - http:
           path: widgets
           method: post
+
+resources:
+  Resources:
+
+    widgetTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.dynamoTables.widget.name}

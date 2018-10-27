@@ -6,14 +6,15 @@ import org.javamoney.moneta.Money;
 import uk.co.mruoc.JacksonConfiguration;
 import uk.co.mruoc.function.UnexpectedErrorException;
 
+import javax.money.MonetaryAmount;
 import java.io.IOException;
 
-public class MoneyTypeConverter implements DynamoDBTypeConverter<String, Money> {
+public class MonetaryAmountTypeConverter implements DynamoDBTypeConverter<String, MonetaryAmount> {
 
     private ObjectMapper mapper = JacksonConfiguration.getMapper();
 
     @Override
-    public String convert(Money money) {
+    public String convert(MonetaryAmount money) {
         try {
             return mapper.writeValueAsString(money);
         } catch (IOException e) {
@@ -22,7 +23,7 @@ public class MoneyTypeConverter implements DynamoDBTypeConverter<String, Money> 
     }
 
     @Override
-    public Money unconvert(String json) {
+    public MonetaryAmount unconvert(String json) {
         try {
             return mapper.readValue(json, Money.class);
         } catch (IOException e) {
