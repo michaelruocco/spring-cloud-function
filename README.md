@@ -89,7 +89,8 @@ Should give a response:
 ## Things still to do
 
 * Add validation for incoming payload on POST request
-* Add functionality for PATCH, DELETE and get all Widgets endpoints
+* Add functionality for PATCH and DELETE
+* Add missing unit test coverage
 * Cucumber tests to be added
 * Tests for AbstractAwsLambdaFunction will be removed when it is extracted into separate library and only functions will be unit tested
 * Look into how to secure an API in API gateway
