@@ -93,6 +93,5 @@ Should give a response:
 * Add functionality for PATCH and DELETE
 * Add missing unit test coverage
 * Cucumber tests to be added
-* Tests for AbstractAwsLambdaFunction will be removed when it is extracted into separate library and only functions will be unit tested
-* Look into how to secure an API in API gateway
+* Tests for AbstractAwsLambdaFunction should be removed and it (along with supporting classes) should be extracted into separate library
 * Secure the API using a cognito user pool
