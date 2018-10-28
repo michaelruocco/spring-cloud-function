@@ -14,10 +14,11 @@ public class UnexpectedErrorExceptionTest {
 
     @Test
     public void shouldReturnCorrectValues() {
-        assertThat(exception.getStatusCode()).isEqualTo(500);
+        assertThat(exception.getStatus()).isEqualTo(500);
         assertThat(exception.getHeaders()).isEmpty();
-        assertThat(exception.getTitle()).isEqualTo("an unexpected error occurred");
         assertThat(exception.getCode()).isEqualTo("UNEXPECTED_ERROR");
+        assertThat(exception.getTitle()).isEqualTo("an unexpected error occurred");
+        assertThat(exception.getDetail()).isEqualTo("test cause");
         assertThat(exception.getMeta()).isEmpty();
     }
 

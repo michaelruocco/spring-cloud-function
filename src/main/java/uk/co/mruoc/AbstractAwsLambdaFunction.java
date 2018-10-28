@@ -36,7 +36,7 @@ public abstract class AbstractAwsLambdaFunction<I, O> implements Function<APIGat
             log.info("api gateway proxy response event returned {}", responseEvent);
             return responseEvent;
         } catch (AbstractException e) {
-            log.info("handling error", e);
+            log.info("handling error {}", e.getMessage(), e);
             APIGatewayProxyResponseEvent responseEvent = toEvent(e);
             log.info("api gateway proxy response event returned {}", responseEvent);
             return responseEvent;
@@ -100,7 +100,7 @@ public abstract class AbstractAwsLambdaFunction<I, O> implements Function<APIGat
             ErrorDocument error = toErrorDocument(e);
             String body = mapper.writeValueAsString(error);
             return new APIGatewayProxyResponseEvent()
-                    .withStatusCode(e.getStatusCode())
+                    .withStatusCode(e.getStatus())
                     .withHeaders(e.getHeaders())
                     .withBody(body);
         } catch (IOException ioe) {
@@ -110,8 +110,10 @@ public abstract class AbstractAwsLambdaFunction<I, O> implements Function<APIGat
 
     private ErrorDocument toErrorDocument(AbstractException e) {
         return ErrorDocument.builder()
-                .title(e.getTitle())
+                .id(e.getId())
                 .code(e.getCode())
+                .title(e.getTitle())
+                .detail(e.getDetail())
                 .meta(e.getMeta())
                 .build();
     }

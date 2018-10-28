@@ -89,10 +89,9 @@ Should give a response:
 ## Things still to do
 
 * Request and response bodies needs to be updated to follow JSON API spec
-* Add ID field to error response documents to follow JSON API spec
-* Cucumber tests to be added
 * Add validation for incoming payload on POST request
 * Add functionality for PATCH and DELETE endpoints
+* Cucumber tests to be added
 * Tests for AbstractAwsLambdaFunction will be removed when it is extracted into separate library and only functions will be unit tested
 * Look into how to secure an API in API gateway
 * Secure the API using a cognito user pool

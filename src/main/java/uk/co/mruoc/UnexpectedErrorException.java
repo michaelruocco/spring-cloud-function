@@ -1,15 +1,19 @@
 package uk.co.mruoc;
 
-import uk.co.mruoc.AbstractException;
+import org.springframework.http.HttpStatus;
 
 public class UnexpectedErrorException extends AbstractException {
 
+    private static final int STATUS = HttpStatus.INTERNAL_SERVER_ERROR.value();
+    private static final String CODE = "UNEXPECTED_ERROR";
+    private static final String TITLE = "an unexpected error occurred";
+
     public UnexpectedErrorException(Throwable cause) {
-        super(cause, 500, "an unexpected error occurred", "UNEXPECTED_ERROR");
+        this(cause.getMessage());
     }
 
-    public UnexpectedErrorException(String title) {
-        super(500, title, "UNEXPECTED_ERROR");
+    public UnexpectedErrorException(String detail) {
+        super(STATUS, CODE, TITLE, detail);
     }
 
 }

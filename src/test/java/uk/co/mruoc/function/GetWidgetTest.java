@@ -60,7 +60,8 @@ public class GetWidgetTest {
         final APIGatewayProxyResponseEvent response = getWidget.apply(request);
 
         assertThat(response.getStatusCode()).isEqualTo(404);
-        assertThat(response.getBody()).isEqualTo(buildNotFoundErrorBody(widget.getId()));
+        assertThat(response.getBody()).startsWith("{\"id\":\"");
+        assertThat(response.getBody()).endsWith(buildEndOfNotFoundErrorBody(widget.getId()));
         assertThat(response.getHeaders()).isEmpty();
     }
 
@@ -74,7 +75,8 @@ public class GetWidgetTest {
         final APIGatewayProxyResponseEvent response = getWidget.apply(request);
 
         assertThat(response.getStatusCode()).isEqualTo(400);
-        assertThat(response.getBody()).isEqualTo("{\"title\":\"widget id must be provided\",\"code\":\"WIDGET_ID_NOT_PROVIDED\",\"meta\":{}}");
+        assertThat(response.getBody()).startsWith("{\"id\":\"");
+        assertThat(response.getBody()).endsWith("\",\"code\":\"WIDGET_ID_NOT_PROVIDED\",\"title\":\"widget id must be provided\",\"detail\":\"widget id must be provided\",\"meta\":{}}");
         assertThat(response.getHeaders()).isEmpty();
     }
 
@@ -84,8 +86,8 @@ public class GetWidgetTest {
         return unmodifiableMap(params);
     }
 
-    private static String buildNotFoundErrorBody(long id) {
-        return String.format("{\"title\":\"no widgets found with id [%s]\",\"code\":\"WIDGET_NOT_FOUND\",\"meta\":{}}", id);
+    private static String buildEndOfNotFoundErrorBody(long id) {
+        return String.format("\",\"code\":\"WIDGET_NOT_FOUND\",\"title\":\"no widgets found\",\"detail\":\"no widgets found with id [%s]\",\"meta\":{\"id\":%s}}", id, id);
     }
 
 }

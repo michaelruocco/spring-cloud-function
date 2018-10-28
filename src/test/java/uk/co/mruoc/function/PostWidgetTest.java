@@ -85,7 +85,8 @@ public class PostWidgetTest {
         final APIGatewayProxyResponseEvent response = postWidget.apply(request);
 
         assertThat(response.getStatusCode()).isEqualTo(400);
-        assertThat(response.getBody()).isEqualTo("{\"title\":\"invalid json [invalid json]\",\"code\":\"INVALID_JSON\",\"meta\":{}}");
+        assertThat(response.getBody()).startsWith("{\"id\":\"");
+        assertThat(response.getBody()).endsWith("\",\"code\":\"INVALID_JSON\",\"title\":\"json is invalid\",\"detail\":\"json [invalid json] is invalid: Unrecognized token 'invalid': was expecting ('true', 'false' or 'null')\\n at [Source: (String)\\\"invalid json\\\"; line: 1, column: 8]\",\"meta\":{}}");
         assertThat(response.getHeaders()).isEmpty();
     }
 
