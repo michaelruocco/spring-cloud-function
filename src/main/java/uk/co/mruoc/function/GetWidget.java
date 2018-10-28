@@ -11,6 +11,7 @@ import uk.co.mruoc.model.Widget;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 public class GetWidget extends AbstractAwsLambdaFunction<Object, WidgetDocument> {
@@ -26,7 +27,7 @@ public class GetWidget extends AbstractAwsLambdaFunction<Object, WidgetDocument>
 
     @Override
     public Response<WidgetDocument> apply(Request<Object> request) {
-        long id = extractId(request);
+        UUID id = extractId(request);
         log.info("extract id {} from request ", id);
         Optional<Widget> widget = service.getWidget(id);
         if (widget.isPresent()) {
@@ -35,10 +36,10 @@ public class GetWidget extends AbstractAwsLambdaFunction<Object, WidgetDocument>
         throw new WidgetNotFoundException(id);
     }
 
-    private long extractId(Request<Object> request) {
+    private UUID extractId(Request<Object> request) {
         Map<String, String> pathParameters = request.getPathParameters();
         if (pathParameters.containsKey("id")) {
-            return Long.parseLong(pathParameters.get("id"));
+            return UUID.fromString(pathParameters.get("id"));
         }
         throw new IdNotProvidedException();
     }

@@ -1,6 +1,7 @@
 package uk.co.mruoc.function;
 
 import uk.co.mruoc.api.WidgetDocument;
+import uk.co.mruoc.api.WidgetDocument.WidgetDocumentBuilder;
 import uk.co.mruoc.model.Widget;
 
 public class WidgetConverter {
@@ -15,12 +16,12 @@ public class WidgetConverter {
     }
 
     public WidgetDocument toDocument(Widget model) {
-        WidgetDocument document = new WidgetDocument();
-        document.setId(model.getId());
-        document.setDescription(model.getDescription());
-        document.setCost(model.getCost());
-        document.setPrice(model.getPrice());
-        return document;
+        return new WidgetDocumentBuilder()
+                .setId(model.getId())
+                .setDescription(model.getDescription())
+                .setCost(model.getCost())
+                .setPrice(model.getPrice())
+                .build();
     }
 
 }

@@ -13,6 +13,7 @@ import uk.co.mruoc.model.FakeWidget;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -80,14 +81,14 @@ public class GetWidgetTest {
         assertThat(response.getHeaders()).isEmpty();
     }
 
-    private static Map<String, String> buildPathParameters(long id) {
+    private static Map<String, String> buildPathParameters(UUID id) {
         Map<String, String> params = new HashMap<>();
-        params.put("id", Long.toString(id));
+        params.put("id", id.toString());
         return unmodifiableMap(params);
     }
 
-    private static String buildEndOfNotFoundErrorBody(long id) {
-        return String.format("\",\"code\":\"WIDGET_NOT_FOUND\",\"title\":\"no widgets found\",\"detail\":\"no widgets found with id [%s]\",\"meta\":{\"id\":%s}}", id, id);
+    private static String buildEndOfNotFoundErrorBody(UUID id) {
+        return String.format("\",\"code\":\"WIDGET_NOT_FOUND\",\"title\":\"no widgets found\",\"detail\":\"no widgets found with id [%s]\",\"meta\":{\"id\":\"%s\"}}", id, id);
     }
 
 }

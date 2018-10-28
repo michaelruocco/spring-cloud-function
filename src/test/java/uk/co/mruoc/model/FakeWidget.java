@@ -4,17 +4,13 @@ import org.javamoney.moneta.Money;
 
 import javax.money.MonetaryAmount;
 import java.text.DecimalFormat;
+import java.util.UUID;
 
 public class FakeWidget extends Widget {
 
-    private static final String JSON_FORMAT = "{" +
-            "\"id\":%s," +
-            "\"description\":\"%s\"," +
-            "\"cost\":{\"amount\":%s,\"currency\":\"%s\"}," +
-            "\"price\":{\"amount\":%s,\"currency\":\"%s\"}" +
-            "}";
+    private static final String JSON_FORMAT = "{\"data\":{\"id\":\"%s\",\"type\":\"widgets\",\"attributes\":{\"description\":\"%s\",\"cost\":{\"amount\":%s,\"currency\":\"%s\"},\"price\":{\"amount\":%s,\"currency\":\"%s\"}}}}";
 
-    private static final long ID = 3;
+    private static final UUID ID = UUID.randomUUID();
     private static final String DESCRIPTION = String.format("fake widget %s", ID);
     private static final MonetaryAmount COST = Money.of(5, "GBP");
     private static final MonetaryAmount PRICE = Money.of(10, "GBP");

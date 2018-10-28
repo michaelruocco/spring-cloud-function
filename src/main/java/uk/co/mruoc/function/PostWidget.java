@@ -10,6 +10,7 @@ import uk.co.mruoc.model.Widget;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class PostWidget extends AbstractAwsLambdaFunction<WidgetDocument, WidgetDocument> {
 
@@ -41,11 +42,11 @@ public class PostWidget extends AbstractAwsLambdaFunction<WidgetDocument, Widget
                 .build();
     }
 
-    private String buildResourceUri(String baseUri, long id) {
+    private String buildResourceUri(String baseUri, UUID id) {
         return String.format("%s/%s", baseUri, id);
     }
 
-    private int getStatusCode(long id) {
+    private int getStatusCode(UUID id) {
         if (service.exists(id)) {
             return 200;
         }

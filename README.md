@@ -29,14 +29,14 @@ If the command has completed successfully you can then test your functions calli
 gateway by running the following command:
 
 ```
-curl -X POST https://{your_api_gateway_endpoint}/dev/widgets -d '{ "id": 3, "description": "widget 3", "cost": { "amount": 6, "currency": "GBP" }, "price": { "amount": 22, "currency": "GBP" } }'
-curl -X GET https://{your_api_gateway_endpoint}/dev/widgets/3
+curl -X POST https://{your_api_gateway_endpoint}/dev/widgets -d '{ "data": { "id": "d60d5c08-d5cc-4258-bbab-241e30dd6791", "type": "widgets", "attributes": { "description": "my widget", "cost": { "amount": 10.00, "currency": "GBP" }, "price": { "amount": 15.00, "currency": "GBP" } } } }'
+curl -X GET https://{your_api_gateway_endpoint}/dev/widgets/d60d5c08-d5cc-4258-bbab-241e30dd6791
 ```
 
 Should both return:
 
 ```
-{ "id": 3, "description": "widget 3", "cost": { "amount": 6, "currency": "GBP" }, "price": { "amount": 22, "currency": "GBP" } }
+{ "data": { "id": "d60d5c08-d5cc-4258-bbab-241e30dd6791", "type": "widgets", "attributes": { "description": "my widget", "cost": { "amount": 10.00, "currency": "GBP" }, "price": { "amount": 15.00, "currency": "GBP" } } } }
 ```
 
 Bare in mind that the first time each service is called it will be performing a "cold start" so will
@@ -65,25 +65,25 @@ there is no API gateway running on your local machine you have to send a more co
 you need to mimic the work that is done by the API Gateway.
 
 ```
-curl -X POST -H "Content-Type:application/json" http://localhost:8080/postWidget -d '{"headers":{"Host":"localhost"},"requestContext":{"stage":"local"},"resource":"/widgets","body":"{\"id\":1,\"description\":\"my-widget\",\"cost\":{\"amount\": 10,\"currency\":\"GBP\"},\"price\":{\"amount\":12,\"currency\":\"GBP\"}}"}'
+curl -X POST -H "Content-Type:application/json" http://localhost:8080/postWidget -d '{"headers":{"Host":"localhost"},"requestContext":{"stage":"local"},"resource":"/widgets","body":"{\"data\":{\"id\":\"d60d5c08-d5cc-4258-bbab-241e30dd6791\",\"type\":\"widgets\",\"attributes\":{\"description\":\"my widget\",\"cost\":{\"amount\":10.00,\"currency\":\"GBP\"},\"price\":{\"amount\":15.00,\"currency\":\"GBP\"}}}}"}'
 ```
 
 Should give a response:
 
 ```
-{"statusCode":201,"headers":{"Location":"https://localhost/local/widgets/1"},"body":"{\"id\":1,\"description\":\"my-widget\",\"cost\":{\"amount\":10.00,\"currency\":\"GBP\"},\"price\":{\"amount\":12.00,\"currency\":\"GBP\"}}"}
+{"statusCode":201,"headers":{"Location":"https://localhost/local/widgets/d60d5c08-d5cc-4258-bbab-241e30dd6791"},"body":"{\"data\":{\"id\":\"d60d5c08-d5cc-4258-bbab-241e30dd6791\",\"type\":\"widgets\",\"attributes\":{\"description\":\"my widget\",\"cost\":{\"amount\":10.00,\"currency\":\"GBP\"},\"price\":{\"amount\":15.00,\"currency\":\"GBP\"}}}}"}
 ```
 
 And:
 
 ```
-curl -X POST -H "Content-Type:application/json" http://localhost:8080/getWidget -d '{"headers":{"Host":"localhost"},"requestContext":{"stage": "local"},"resource":"/widgets","pathParameters":{"id":1}}'
+curl -X POST -H "Content-Type:application/json" http://localhost:8080/getWidget -d '{"headers":{"Host":"localhost"},"requestContext":{"stage": "local"},"resource":"/widgets","pathParameters":{"id":"d60d5c08-d5cc-4258-bbab-241e30dd6791"}}'
 ```
 
 Should give a response:
 
 ```
-{"statusCode":200,"headers":{},"body":"{\"id\":1,\"description\":\"my-widget\",\"cost\":{\"amount\":10.00,\"currency\":\"GBP\"},\"price\":{\"amount\":12.00,\"currency\":\"GBP\"}}"}
+{"statusCode":200,"headers":{},"body":"{\"data\":{\"id\":\"d60d5c08-d5cc-4258-bbab-241e30dd6791\",\"type\":\"widgets\",\"attributes\":{\"description\":\"my widget\",\"cost\":{\"amount\":10.00,\"currency\":\"GBP\"},\"price\":{\"amount\":15.00,\"currency\":\"GBP\"}}}}"}
 ```
 
 ## Things still to do
