@@ -9,9 +9,6 @@ import uk.co.mruoc.Response;
 import uk.co.mruoc.api.WidgetsDocument;
 import uk.co.mruoc.model.Widget;
 
-import java.util.Map;
-import java.util.UUID;
-
 @Slf4j
 public class GetWidgets extends AbstractAwsLambdaFunction<Object, WidgetsDocument> {
 

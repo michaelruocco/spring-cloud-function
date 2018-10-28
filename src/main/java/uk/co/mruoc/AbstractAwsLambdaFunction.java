@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import uk.co.mruoc.api.ErrorData;
 import uk.co.mruoc.api.ErrorDocument;
 import uk.co.mruoc.function.InvalidJsonException;
 
@@ -109,13 +110,13 @@ public abstract class AbstractAwsLambdaFunction<I, O> implements Function<APIGat
     }
 
     private ErrorDocument toErrorDocument(AbstractException e) {
-        return ErrorDocument.builder()
+        return new ErrorDocument(ErrorData.builder()
                 .id(e.getId())
                 .code(e.getCode())
                 .title(e.getTitle())
                 .detail(e.getDetail())
                 .meta(e.getMeta())
-                .build();
+                .build());
     }
 
 }

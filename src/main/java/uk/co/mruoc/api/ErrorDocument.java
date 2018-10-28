@@ -1,19 +1,22 @@
 package uk.co.mruoc.api;
 
-import lombok.Builder;
 import lombok.Getter;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.List;
+
+import static java.util.Collections.singletonList;
 
 @Getter
-@Builder
 public class ErrorDocument {
 
-    private final UUID id;
-    private final String code;
-    private final String title;
-    private final String detail;
-    private final Map<String, Object> meta;
+    private final List<ErrorData> errors;
+
+    public ErrorDocument(ErrorData error) {
+        this(singletonList(error));
+    }
+
+    public ErrorDocument(List<ErrorData> errors) {
+        this.errors = errors;
+    }
 
 }

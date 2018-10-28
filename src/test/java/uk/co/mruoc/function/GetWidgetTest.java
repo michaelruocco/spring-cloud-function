@@ -41,7 +41,7 @@ public class GetWidgetTest {
                 .withPathParamters(buildPathParameters(widget.getId()))
                 .withHeaders(emptyMap())
                 .withRequestContext(new ProxyRequestContext());
-        final String expectedBody = widget.asJson();
+        final String expectedBody = widget.asJsonDocument();
 
         final APIGatewayProxyResponseEvent response = getWidget.apply(request);
 
@@ -61,7 +61,7 @@ public class GetWidgetTest {
         final APIGatewayProxyResponseEvent response = getWidget.apply(request);
 
         assertThat(response.getStatusCode()).isEqualTo(404);
-        assertThat(response.getBody()).startsWith("{\"id\":\"");
+        assertThat(response.getBody()).startsWith("{\"errors\":[{\"id\":\"");
         assertThat(response.getBody()).endsWith(buildEndOfNotFoundErrorBody(widget.getId()));
         assertThat(response.getHeaders()).isEmpty();
     }
@@ -76,8 +76,8 @@ public class GetWidgetTest {
         final APIGatewayProxyResponseEvent response = getWidget.apply(request);
 
         assertThat(response.getStatusCode()).isEqualTo(400);
-        assertThat(response.getBody()).startsWith("{\"id\":\"");
-        assertThat(response.getBody()).endsWith("\",\"code\":\"WIDGET_ID_NOT_PROVIDED\",\"title\":\"widget id must be provided\",\"detail\":\"widget id must be provided\",\"meta\":{}}");
+        assertThat(response.getBody()).startsWith("{\"errors\":[{\"id\":\"");
+        assertThat(response.getBody()).endsWith("\",\"code\":\"WIDGET_ID_NOT_PROVIDED\",\"title\":\"widget id must be provided\",\"detail\":\"widget id must be provided\",\"meta\":{}}]}");
         assertThat(response.getHeaders()).isEmpty();
     }
 
@@ -88,7 +88,7 @@ public class GetWidgetTest {
     }
 
     private static String buildEndOfNotFoundErrorBody(UUID id) {
-        return String.format("\",\"code\":\"WIDGET_NOT_FOUND\",\"title\":\"no widgets found\",\"detail\":\"no widgets found with id [%s]\",\"meta\":{\"id\":\"%s\"}}", id, id);
+        return String.format("\",\"code\":\"WIDGET_NOT_FOUND\",\"title\":\"no widgets found\",\"detail\":\"no widgets found with id [%s]\",\"meta\":{\"id\":\"%s\"}}]}", id, id);
     }
 
 }

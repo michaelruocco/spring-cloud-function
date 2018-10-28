@@ -37,7 +37,7 @@ public class PostWidgetTest {
     @Test
     public void shouldCreateWidgetAndReturn201Status() {
         given(service.createWidget(any(Widget.class))).willReturn(widget);
-        final String body = widget.asJson();
+        final String body = widget.asJsonDocument();
         final ProxyRequestContext context = new ProxyRequestContext();
         context.setStage("test");
         final Map<String, String> headers = new HashMap<>();
@@ -59,7 +59,7 @@ public class PostWidgetTest {
     public void shouldUpdateWidgetAndReturn200Status() {
         given(service.createWidget(any(Widget.class))).willReturn(widget);
         given(service.exists(widget.getId())).willReturn(true);
-        final String body = widget.asJson();
+        final String body = widget.asJsonDocument();
         final ProxyRequestContext context = new ProxyRequestContext();
         context.setStage("test");
         final Map<String, String> headers = new HashMap<>();
@@ -85,8 +85,8 @@ public class PostWidgetTest {
         final APIGatewayProxyResponseEvent response = postWidget.apply(request);
 
         assertThat(response.getStatusCode()).isEqualTo(400);
-        assertThat(response.getBody()).startsWith("{\"id\":\"");
-        assertThat(response.getBody()).endsWith("\",\"code\":\"INVALID_JSON\",\"title\":\"json is invalid\",\"detail\":\"json [invalid json] is invalid: Unrecognized token 'invalid': was expecting ('true', 'false' or 'null')\\n at [Source: (String)\\\"invalid json\\\"; line: 1, column: 8]\",\"meta\":{}}");
+        assertThat(response.getBody()).startsWith("{\"errors\":[{\"id\":\"");
+        assertThat(response.getBody()).endsWith("\",\"code\":\"INVALID_JSON\",\"title\":\"json is invalid\",\"detail\":\"json [invalid json] is invalid: Unrecognized token 'invalid': was expecting ('true', 'false' or 'null')\\n at [Source: (String)\\\"invalid json\\\"; line: 1, column: 8]\",\"meta\":{}}]}");
         assertThat(response.getHeaders()).isEmpty();
     }
 

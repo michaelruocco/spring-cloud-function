@@ -89,6 +89,7 @@ Should give a response:
 ## Things still to do
 
 * Add validation for incoming payload on POST request
+* Add pagination to get all widget endpoint
 * Add functionality for PATCH and DELETE
 * Add missing unit test coverage
 * Cucumber tests to be added

@@ -8,7 +8,8 @@ import java.util.UUID;
 
 public class FakeWidget extends Widget {
 
-    private static final String JSON_FORMAT = "{\"data\":{\"id\":\"%s\",\"type\":\"widgets\",\"attributes\":{\"description\":\"%s\",\"cost\":{\"amount\":%s,\"currency\":\"%s\"},\"price\":{\"amount\":%s,\"currency\":\"%s\"}}}}";
+    private static final String JSON_OBJECT_FORMAT = "{\"id\":\"%s\",\"type\":\"widgets\",\"attributes\":{\"description\":\"%s\",\"cost\":{\"amount\":%s,\"currency\":\"%s\"},\"price\":{\"amount\":%s,\"currency\":\"%s\"}}}";
+    private static final String JSON_DOCUMENT_FORMAT = "{\"data\":%s}";
 
     private static final UUID ID = UUID.randomUUID();
     private static final String DESCRIPTION = String.format("fake widget %s", ID);
@@ -19,9 +20,13 @@ public class FakeWidget extends Widget {
         super(ID, DESCRIPTION, COST, PRICE);
     }
 
-    public String asJson() {
+    public String asJsonDocument() {
+        return String.format(JSON_DOCUMENT_FORMAT, asJsonObject());
+    }
+
+    public String asJsonObject() {
         DecimalFormat df = new DecimalFormat("#.00");
-        return String.format(JSON_FORMAT,
+        return String.format(JSON_OBJECT_FORMAT,
                 ID,
                 DESCRIPTION,
                 df.format(COST.getNumber()), COST.getCurrency(),

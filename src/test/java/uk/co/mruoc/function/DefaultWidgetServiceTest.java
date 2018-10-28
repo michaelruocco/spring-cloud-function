@@ -10,6 +10,8 @@ import uk.co.mruoc.repository.WidgetRepository;
 import java.util.Optional;
 import java.util.UUID;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -81,6 +83,26 @@ public class DefaultWidgetServiceTest {
         Widget widget = service.createWidget(savedWidget);
 
         assertThat(widget).isEqualTo(expectedWidget);
+    }
+
+    @Test
+    public void shouldReturnNoWidgetsIfNoneFound() {
+        given(repository.findAll()).willReturn(emptyList());
+
+        Iterable<Widget> widgets = service.getAllWidgets();
+
+        assertThat(widgets).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnAllWidgets() {
+        Widget widget1 = new FakeWidget();
+        Widget widget2 = new FakeWidget();
+        given(repository.findAll()).willReturn(asList(widget1, widget2));
+
+        Iterable<Widget> widgets = service.getAllWidgets();
+
+        assertThat(widgets).containsExactly(widget1, widget2);
     }
 
 }
