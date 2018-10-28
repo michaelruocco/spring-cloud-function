@@ -88,7 +88,6 @@ Should give a response:
 
 ## Things still to do
 
-* Request and response bodies needs to be updated to follow JSON API spec
 * Add validation for incoming payload on POST request
 * Add functionality for PATCH, DELETE and get all Widgets endpoints
 * Cucumber tests to be added
