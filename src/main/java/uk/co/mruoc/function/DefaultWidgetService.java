@@ -33,4 +33,9 @@ public class DefaultWidgetService implements WidgetService {
         return repository.save(widget);
     }
 
+    @Override
+    public Iterable<Widget> getAllWidgets() {
+        return repository.findAll();
+    }
+
 }

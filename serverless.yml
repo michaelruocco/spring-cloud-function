@@ -13,6 +13,9 @@ custom:
     getWidget:
       name: ${self:custom.stage}-getWidget
 
+    getWidgets:
+      name: ${self:custom.stage}-getWidgets
+
     postWidget:
       name: ${self:custom.stage}-postWidget
 
@@ -51,6 +54,16 @@ functions:
     events:
       - http:
           path: widgets/{id}
+          method: get
+
+  getWidgets:
+    environment:
+      FUNCTION_NAME: 'getWidgets'
+    handler: uk.co.mruoc.CloudHandler
+    name: ${self:custom.lambdas.getWidgets.name}
+    events:
+      - http:
+          path: widgets
           method: get
 
   postWidget:

@@ -28,7 +28,7 @@ public class GetWidget extends AbstractAwsLambdaFunction<Object, WidgetDocument>
     @Override
     public Response<WidgetDocument> apply(Request<Object> request) {
         UUID id = extractId(request);
-        log.info("extract id {} from request ", id);
+        log.info("extract id {} from request", id);
         Optional<Widget> widget = service.getWidget(id);
         if (widget.isPresent()) {
             return toResponse(widget.get());
