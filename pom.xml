@@ -64,11 +64,6 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.javamoney</groupId>
-            <artifactId>moneta</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.zalando</groupId>
             <artifactId>jackson-datatype-money</artifactId>
             <version>1.1.0</version>
@@ -172,6 +167,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <sqlite4java.library.path>lib/sqlite4java</sqlite4java.library.path>
+                        <sqlite4java.library.path>lib/sqlite4java</sqlite4java.library.path>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -181,6 +177,12 @@
                 <version>1.2.1</version>
                 <configuration>
                     <mainClass>uk.co.mruoc.Application</mainClass>
+                    <systemProperties>
+                        <systemProperty>
+                            <key>spring.profiles.active</key>
+                            <value>local</value>
+                        </systemProperty>
+                    </systemProperties>
                 </configuration>
             </plugin>
             <plugin>

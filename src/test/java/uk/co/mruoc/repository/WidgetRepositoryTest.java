@@ -30,14 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("local")
-@TestPropertySource(properties = {
-        "aws.dynamodb.endpoint=http://localhost:8000/",
-        "aws.region=eu-west-1",
-        "aws.accesskey=access123",
-        "aws.secretkey=secret123",
-        "STAGE=test",
-        "REGION=eu-west-1"
-})
+
 public class WidgetRepositoryTest {
 
     @ClassRule

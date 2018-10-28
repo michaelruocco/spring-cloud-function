@@ -39,7 +39,7 @@ public class PostWidgetTest {
         given(service.createWidget(any(Widget.class))).willReturn(widget);
         final String body = widget.asJson();
         final ProxyRequestContext context = new ProxyRequestContext();
-        context.setStage("dev");
+        context.setStage("test");
         final Map<String, String> headers = new HashMap<>();
         headers.put("Host", "localhost");
         final APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent()
@@ -52,7 +52,7 @@ public class PostWidgetTest {
 
         assertThat(response.getStatusCode()).isEqualTo(201);
         assertThat(response.getBody()).isEqualTo(body);
-        assertThat(response.getHeaders()).containsOnly(entry("Location", "https://localhost/dev/widgets/" + widget.getId()));
+        assertThat(response.getHeaders()).containsOnly(entry("Location", "https://localhost/test/widgets/" + widget.getId()));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class PostWidgetTest {
         given(service.exists(widget.getId())).willReturn(true);
         final String body = widget.asJson();
         final ProxyRequestContext context = new ProxyRequestContext();
-        context.setStage("dev");
+        context.setStage("test");
         final Map<String, String> headers = new HashMap<>();
         headers.put("Host", "localhost");
         final APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent()
@@ -74,7 +74,7 @@ public class PostWidgetTest {
 
         assertThat(response.getStatusCode()).isEqualTo(200);
         assertThat(response.getBody()).isEqualTo(body);
-        assertThat(response.getHeaders()).containsOnly(entry("Location", "https://localhost/dev/widgets/" + widget.getId()));
+        assertThat(response.getHeaders()).containsOnly(entry("Location", "https://localhost/test/widgets/" + widget.getId()));
     }
 
     @Test

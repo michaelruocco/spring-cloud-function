@@ -44,30 +44,50 @@ likely take between 16-18 seconds to respond, following that you should get a mu
 
 ## Running Locally
 
-To run and test locally you can either run directly from maven - NOTE this still requires
-additional work now that dynamo db is being used in the code, so this is currently broken,
-but I will be looking to fix it shortly.
+To run and test locally you can either run directly from maven. The application depends on DynamoDB
+so in order for it to run successfully you need to have an instance running locally. The preferred
+method for this is to use docker image provded by AWS. Assuming you have docker installed and
+running you can do this by running the following command.
+
+```
+docker run --name widget-dynamodb -p 8000:8000 -d amazon/dynamodb-local
+```
+
+This will start up a container running dynamodb on port 8000 named widget-dynamodb. Once this is
+running you can run the following command to start the application.
 
 ```
 mvn clean install exec:java
 ```
 
-Or you can build the jars and execute the fat jar used for running locally:
-
-```
-mvn clean package
-java -jar target/spring-cloud-function-1.0.0-SNAPSHOT.jar
-```
-
-In either case, when once the server is up and running you can send requests to it. However, because
+Once the server is up and running you can send requests to it. However, because
 there is no API gateway running on your local machine you have to send a more complex request, because
 you need to mimic the work that is done by the API Gateway.
 
-TODO example requests to be added here.
+```
+curl -X POST -H "Content-Type:application/json" http://localhost:8080/postWidget -d '{"headers":{"Host":"localhost"},"requestContext":{"stage":"local"},"resource":"/widgets","body":"{\"id\":1,\"description\":\"my-widget\",\"cost\":{\"amount\": 10,\"currency\":\"GBP\"},\"price\":{\"amount\":12,\"currency\":\"GBP\"}}"}'
+```
+
+Should give a response:
+
+```
+{"statusCode":201,"headers":{"Location":"https://localhost/local/widgets/1"},"body":"{\"id\":1,\"description\":\"my-widget\",\"cost\":{\"amount\":10.00,\"currency\":\"GBP\"},\"price\":{\"amount\":12.00,\"currency\":\"GBP\"}}"}
+```
+
+And:
+
+```
+curl -X POST -H "Content-Type:application/json" http://localhost:8080/getWidget -d '{"headers":{"Host":"localhost"},"requestContext":{"stage": "local"},"resource":"/widgets","pathParameters":{"id":1}}'
+```
+
+Should give a response:
+
+```
+{"statusCode":200,"headers":{},"body":"{\"id\":1,\"description\":\"my-widget\",\"cost\":{\"amount\":10.00,\"currency\":\"GBP\"},\"price\":{\"amount\":12.00,\"currency\":\"GBP\"}}"}
+```
 
 ## Things still to do
 
-* Running locally connected to local dynamo db needs to be fixed (probably by using docker)
 * Request and response bodies needs to be updated to follow JSON API spec
 * Add ID field to error response documents to follow JSON API spec
 * Cucumber tests to be added
