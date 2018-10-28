@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.javamoney.moneta.Money;
 import uk.co.mruoc.JacksonConfiguration;
-import uk.co.mruoc.function.UnexpectedErrorException;
+import uk.co.mruoc.UnexpectedErrorException;
 
 import javax.money.MonetaryAmount;
 import java.io.IOException;

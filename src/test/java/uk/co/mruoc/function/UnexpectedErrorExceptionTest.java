@@ -2,6 +2,7 @@ package uk.co.mruoc.function;
 
 import org.junit.Test;
 import uk.co.mruoc.AbstractException;
+import uk.co.mruoc.UnexpectedErrorException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

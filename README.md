@@ -75,3 +75,4 @@ TODO example requests to be added here.
 * Add functionality for PATCH and DELETE endpoints
 * Tests for AbstractAwsLambdaFunction will be removed when it is extracted into separate library and only functions will be unit tested
 * Look into how to secure an API in API gateway
+* Secure the API using a cognito user pool

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import uk.co.mruoc.api.ErrorDocument;
 import uk.co.mruoc.function.InvalidJsonException;
-import uk.co.mruoc.function.UnexpectedErrorException;
 
 import java.io.IOException;
 import java.util.function.Function;
