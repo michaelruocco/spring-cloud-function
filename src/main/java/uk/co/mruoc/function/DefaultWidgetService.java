@@ -29,6 +29,7 @@ public class DefaultWidgetService implements WidgetService {
 
     @Override
     public Widget createWidget(Widget widget) {
+        log.info("saving widget {}", widget);
         return repository.save(widget);
     }
 
