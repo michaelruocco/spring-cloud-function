@@ -1,7 +1,6 @@
 package uk.co.mruoc.api;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import uk.co.mruoc.api.WidgetDocument.WidgetData;
 
 import javax.validation.Valid;
