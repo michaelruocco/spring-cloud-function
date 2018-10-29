@@ -2,6 +2,10 @@ package uk.co.mruoc.function;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
 import uk.co.mruoc.model.FakeWidget;
 import uk.co.mruoc.model.Widget;
@@ -87,20 +91,22 @@ public class DefaultWidgetServiceTest {
 
     @Test
     public void shouldReturnNoWidgetsIfNoneFound() {
-        given(repository.findAll()).willReturn(emptyList());
+        Pageable pageRequest = PageRequest.of(0, 10);
+        given(repository.findAll(pageRequest)).willReturn(new PageImpl<>(emptyList()));
 
-        Iterable<Widget> widgets = service.getAllWidgets();
+        Page<Widget> widgets = service.getWidgets(pageRequest);
 
         assertThat(widgets).isEmpty();
     }
 
     @Test
-    public void shouldReturnAllWidgets() {
+    public void shouldReturnPageOfWidgets() {
         Widget widget1 = new FakeWidget();
         Widget widget2 = new FakeWidget();
-        given(repository.findAll()).willReturn(asList(widget1, widget2));
+        Pageable pageRequest = PageRequest.of(0, 10);
+        given(repository.findAll(pageRequest)).willReturn(new PageImpl<>(asList(widget1, widget2)));
 
-        Iterable<Widget> widgets = service.getAllWidgets();
+        Page<Widget> widgets = service.getWidgets(pageRequest);
 
         assertThat(widgets).containsExactly(widget1, widget2);
     }

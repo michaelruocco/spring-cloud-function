@@ -1,10 +1,6 @@
 package uk.co.mruoc;
 
-import java.util.Map;
-
-public interface Response<I> {
-
-    Map<String, String> getHeaders();
+public interface Response<I> extends HeaderProvider {
 
     I getBody();
 

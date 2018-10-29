@@ -14,6 +14,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -71,6 +73,24 @@ public class WidgetRepositoryTest {
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0)).isEqualToComparingFieldByField(widget);
+    }
+
+
+    @Test
+    public void shouldReturnPageOfWidgets() {
+        Widget widget1 = new FakeWidget();
+        Widget widget2 = new FakeWidget();
+        Widget widget3 = new FakeWidget();
+        repository.save(widget1);
+        repository.save(widget2);
+        repository.save(widget3);
+
+        Page<Widget> result = repository.findAll(PageRequest.of(0, 2));
+
+        assertThat(result.getTotalPages()).isEqualTo(2);
+        assertThat(result.getTotalElements()).isEqualTo(3L);
+        assertThat(result).hasSize(2);
+        assertThat(result.getContent()).containsAnyOf(widget1, widget2, widget3);
     }
 
 }

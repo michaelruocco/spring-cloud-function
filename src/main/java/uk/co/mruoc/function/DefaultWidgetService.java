@@ -2,6 +2,8 @@ package uk.co.mruoc.function;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import uk.co.mruoc.model.Widget;
 import uk.co.mruoc.repository.WidgetRepository;
@@ -34,8 +36,8 @@ public class DefaultWidgetService implements WidgetService {
     }
 
     @Override
-    public Iterable<Widget> getAllWidgets() {
-        return repository.findAll();
+    public Page<Widget> getWidgets(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
 }

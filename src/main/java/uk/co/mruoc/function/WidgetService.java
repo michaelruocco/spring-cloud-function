@@ -1,5 +1,7 @@
 package uk.co.mruoc.function;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import uk.co.mruoc.model.Widget;
 
 import java.util.Optional;
@@ -13,6 +15,6 @@ public interface WidgetService {
 
     Widget createWidget(Widget widget);
 
-    Iterable<Widget> getAllWidgets();
+    Page<Widget> getWidgets(Pageable pageable);
 
 }

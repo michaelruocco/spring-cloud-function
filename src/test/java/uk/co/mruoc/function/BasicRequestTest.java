@@ -59,7 +59,7 @@ public class BasicRequestTest {
     public void shouldPrintFieldsFromToString() {
         Request<Object> request = BasicRequest.builder().build();
 
-        assertThat(request.toString()).isEqualTo("BasicRequest(body=null, headers=null, pathParameters=null, queryStringParameters=null, uri=null)");
+        assertThat(request.toString()).isEqualTo("BasicRequest(body=null, uri=null, headers=null, pathParameters=null, queryStringParameters=null)");
     }
 
 }

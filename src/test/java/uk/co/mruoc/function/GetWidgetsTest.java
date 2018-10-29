@@ -6,11 +6,15 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.util.ReflectionTestUtils;
 import uk.co.mruoc.JacksonConfiguration;
 import uk.co.mruoc.model.FakeWidget;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
@@ -35,10 +39,14 @@ public class GetWidgetsTest {
 
     @Test
     public void shouldReturnWidgets() {
-        given(service.getAllWidgets()).willReturn(Arrays.asList(widget1, widget2));
+        Map<String, String> queryStringParameters = new HashMap<>();
+        queryStringParameters.put("pageNumber", "0");
+        queryStringParameters.put("pageSize", "10");
+        given(service.getWidgets(PageRequest.of(0, 10))).willReturn(new PageImpl<>(Arrays.asList(widget1, widget2)));
         final APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent()
                 .withPathParamters(emptyMap())
                 .withHeaders(emptyMap())
+                .withQueryStringParamters(queryStringParameters)
                 .withRequestContext(new ProxyRequestContext());
         final String expectedBody = String.format("{\"data\":[%s,%s]}", widget1.asJsonObject(), widget2.asJsonObject());
 
@@ -51,10 +59,14 @@ public class GetWidgetsTest {
 
     @Test
     public void shouldReturnEmptyArrayIfNoWidgetsFound() {
-        given(service.getAllWidgets()).willReturn(emptyList());
+        Map<String, String> queryStringParameters = new HashMap<>();
+        queryStringParameters.put("pageNumber", "0");
+        queryStringParameters.put("pageSize", "10");
+        given(service.getWidgets(PageRequest.of(0, 10))).willReturn(new PageImpl<>(emptyList()));
         final APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent()
                 .withPathParamters(emptyMap())
                 .withHeaders(emptyMap())
+                .withQueryStringParamters(queryStringParameters)
                 .withRequestContext(new ProxyRequestContext());
 
         final APIGatewayProxyResponseEvent response = getWidgets.apply(request);
