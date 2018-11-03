@@ -11,8 +11,7 @@ with your AWS account, instructions for doing this can be found
 [here](https://serverless.com/framework/docs/providers/aws/guide/installation/).
 
 ```
-mvn clean package // builds thin jar for aws deployment, and fat jar for running locally
-sls deploy // deploys jar to aws and creates two lambda functions behind API gateway
+make deploy
 ```
 
 If the serverless (sls) command completes successfully it will print various bits of output including
@@ -50,15 +49,11 @@ method for this is to use docker image provded by AWS. Assuming you have docker 
 running you can do this by running the following command.
 
 ```
-docker run --name widget-dynamodb -p 8000:8000 -d amazon/dynamodb-local
+make run
 ```
 
-This will start up a container running dynamodb on port 8000 named widget-dynamodb. Once this is
-running you can run the following command to start the application.
-
-```
-mvn clean install exec:java
-```
+This will start up a container running dynamodb on port 8000 named widget-dynamodb and the application
+running on port 8080.
 
 Once the server is up and running you can send requests to it. However, because
 there is no API gateway running on your local machine you have to send a more complex request, because
