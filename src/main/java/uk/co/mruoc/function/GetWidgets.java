@@ -28,9 +28,9 @@ public class GetWidgets extends AbstractAwsLambdaFunction<Object, WidgetsDocumen
 
     @Override
     public Response<WidgetsDocument> apply(Request<Object> request) {
-        Pageable pageRequest = pageRequestFactory.build(request);
+        final Pageable pageRequest = pageRequestFactory.build(request);
         log.info("getting page of widgets {}", pageRequest);
-        Page<Widget> widgets = service.getWidgets(pageRequest);
+        final Page<Widget> widgets = service.getWidgets(pageRequest);
         return toResponse(widgets);
     }
 

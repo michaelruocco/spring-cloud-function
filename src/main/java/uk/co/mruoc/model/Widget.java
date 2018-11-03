@@ -52,6 +52,10 @@ public class Widget {
         this.description = description;
     }
 
+    public boolean hasDescription() {
+        return description != null;
+    }
+
     @DynamoDBAttribute
     @DynamoDBTypeConverted(converter = MonetaryAmountTypeConverter.class)
     public MonetaryAmount getCost() {
@@ -62,6 +66,10 @@ public class Widget {
         this.cost = cost;
     }
 
+    public boolean hasCost() {
+        return cost != null;
+    }
+
     @DynamoDBAttribute
     @DynamoDBTypeConverted(converter = MonetaryAmountTypeConverter.class)
     public MonetaryAmount getPrice() {
@@ -70,6 +78,19 @@ public class Widget {
 
     public void setPrice(MonetaryAmount price) {
         this.price = price;
+    }
+
+    public boolean hasPrice() {
+        return price != null;
+    }
+
+    public Widget update(Widget widget) {
+        final Widget updatedWidget = new Widget();
+        updatedWidget.setId(id);
+        updatedWidget.setDescription(widget.hasDescription() ? widget.getDescription() : description);
+        updatedWidget.setCost(widget.hasCost() ? widget.getCost() : cost);
+        updatedWidget.setPrice(widget.hasPrice() ? widget.getPrice() : price);
+        return updatedWidget;
     }
 
 }

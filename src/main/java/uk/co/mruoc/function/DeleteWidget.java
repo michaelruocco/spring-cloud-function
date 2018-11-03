@@ -24,7 +24,7 @@ public class DeleteWidget extends AbstractAwsLambdaFunction<Object, Object> {
 
     @Override
     public Response<Object> apply(Request<Object> request) {
-        UUID id = idExtractor.extract(request);
+        final UUID id = idExtractor.extract(request);
         log.info("extract id {} from request", id);
         service.deleteWidget(id);
         return toResponse();

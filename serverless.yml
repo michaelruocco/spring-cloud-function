@@ -22,6 +22,9 @@ custom:
     deleteWidget:
       name: ${self:custom.stage}-deleteWidget
 
+    patchWidget:
+      name: ${self:custom.stage}-patchWidget
+
   dynamoTables:
     widget:
       name: ${self:custom.stage}-widget
@@ -89,6 +92,16 @@ functions:
       - http:
           path: widgets/{id}
           method: delete
+
+  patchWidget:
+    environment:
+      FUNCTION_NAME: 'patchWidget'
+    handler: uk.co.mruoc.CloudHandler
+    name: ${self:custom.lambdas.patchWidget.name}
+    events:
+      - http:
+          path: widgets/{id}
+          method: patch
 
 resources:
   Resources:

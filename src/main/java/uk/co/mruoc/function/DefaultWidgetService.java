@@ -45,4 +45,14 @@ public class DefaultWidgetService implements WidgetService {
         repository.deleteById(id);
     }
 
+    @Override
+    public Widget updateWidget(UUID id, Widget widget) {
+        final Optional<Widget> originalWidget = getWidget(id);
+        if (originalWidget.isPresent()) {
+            final Widget updatedWidget = originalWidget.get().update(widget);
+            return repository.save(updatedWidget);
+        }
+        throw new WidgetNotFoundException(id);
+    }
+
 }

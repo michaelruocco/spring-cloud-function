@@ -9,13 +9,12 @@ import uk.co.mruoc.Response;
 import uk.co.mruoc.api.WidgetDocument;
 import uk.co.mruoc.model.Widget;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.OK;
 
 @Slf4j
-public class GetWidget extends AbstractAwsLambdaFunction<Object, WidgetDocument> {
+public class PatchWidget extends AbstractAwsLambdaFunction<WidgetDocument, WidgetDocument> {
 
     private final WidgetConverter converter = new WidgetConverter();
     private final IdExtractor idExtractor = new IdExtractor();
@@ -23,25 +22,23 @@ public class GetWidget extends AbstractAwsLambdaFunction<Object, WidgetDocument>
     @Autowired
     private WidgetService service;
 
-    public GetWidget() {
-        super(Object.class);
+    public PatchWidget() {
+        super(WidgetDocument.class);
     }
 
     @Override
-    public Response<WidgetDocument> apply(Request<Object> request) {
+    public Response<WidgetDocument> apply(Request<WidgetDocument> request) {
         final UUID id = idExtractor.extract(request);
         log.info("extract id {} from request", id);
-        final Optional<Widget> widget = service.getWidget(id);
-        if (widget.isPresent()) {
-            return toResponse(widget.get());
-        }
-        throw new WidgetNotFoundException(id);
+        final Widget widget = converter.toModel(request.getBody());
+        final Widget updatedWidget = service.updateWidget(id, widget);
+        return toResponse(updatedWidget);
     }
 
-    private Response<WidgetDocument> toResponse(Widget widget) {
+    private Response<WidgetDocument> toResponse(Widget body) {
         return BasicResponse.<WidgetDocument>builder()
                 .statusCode(OK.value())
-                .body(converter.toDocument(widget))
+                .body(converter.toDocument(body))
                 .build();
     }
 

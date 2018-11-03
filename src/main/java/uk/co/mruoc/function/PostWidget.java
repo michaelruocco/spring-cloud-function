@@ -29,10 +29,10 @@ public class PostWidget extends AbstractAwsLambdaFunction<WidgetDocument, Widget
 
     @Override
     public Response<WidgetDocument> apply(Request<WidgetDocument> request) {
-        Widget widget = converter.toModel(request.getBody());
-        int statusCode = getStatusCode(widget.getId());
-        Widget createdWidget = service.createWidget(widget);
-        String uri = ResourceUriBuilder.build(request.getUri(), createdWidget.getId());
+        final Widget widget = converter.toModel(request.getBody());
+        final int statusCode = getStatusCode(widget.getId());
+        final Widget createdWidget = service.createWidget(widget);
+        final String uri = ResourceUriBuilder.build(request.getUri(), createdWidget.getId());
         return toResponse(statusCode, createdWidget, uri);
     }
 

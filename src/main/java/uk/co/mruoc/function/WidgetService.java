@@ -19,4 +19,6 @@ public interface WidgetService {
 
     void deleteWidget(UUID id);
 
+    Widget updateWidget(UUID id, Widget widget);
+
 }
