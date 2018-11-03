@@ -3,7 +3,6 @@ package uk.co.mruoc;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import uk.co.mruoc.QueryStringParameterProvider;
 
 @Slf4j
 public class PageRequestFactory {

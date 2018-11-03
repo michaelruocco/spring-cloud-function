@@ -37,19 +37,24 @@ public class DefaultWidgetService implements WidgetService {
 
     @Override
     public Page<Widget> getWidgets(Pageable pageable) {
+        log.info("getting page of widgets {}", pageable);
         return repository.findAll(pageable);
     }
 
     @Override
     public void deleteWidget(UUID id) {
+        log.info("deleting widget with id {}", id);
         repository.deleteById(id);
     }
 
     @Override
     public Widget updateWidget(UUID id, Widget widget) {
+        log.info("updating widget with id {} with fields {}", id, widget);
         final Optional<Widget> originalWidget = getWidget(id);
         if (originalWidget.isPresent()) {
+            log.info("loaded original widget {}", originalWidget.get());
             final Widget updatedWidget = originalWidget.get().update(widget);
+            log.info("saving updated widget {}", updatedWidget);
             return repository.save(updatedWidget);
         }
         throw new WidgetNotFoundException(id);
