@@ -23,7 +23,7 @@ import uk.co.mruoc.Application;
 import uk.co.mruoc.model.FakeWidget;
 import uk.co.mruoc.model.Widget;
 
-import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -69,12 +69,11 @@ public class WidgetRepositoryTest {
         Widget widget = new FakeWidget();
         repository.save(widget);
 
-        List<Widget> result = (List<Widget>) repository.findAll();
+        Optional<Widget> result = repository.findById(widget.getId());
 
-        assertThat(result).hasSize(1);
-        assertThat(result.get(0)).isEqualToComparingFieldByField(widget);
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get()).isEqualToComparingFieldByField(widget);
     }
-
 
     @Test
     public void shouldReturnPageOfWidgets() {
@@ -91,6 +90,20 @@ public class WidgetRepositoryTest {
         assertThat(result.getTotalElements()).isEqualTo(3L);
         assertThat(result).hasSize(2);
         assertThat(result.getContent()).containsAnyOf(widget1, widget2, widget3);
+    }
+
+    @Test
+    public void shouldDeleteWidget() {
+        Widget widget = new FakeWidget();
+        repository.save(widget);
+
+        Optional<Widget> result = repository.findById(widget.getId());
+        assertThat(result.isPresent()).isTrue();
+
+        repository.deleteById(widget.getId());
+
+        result = repository.findById(widget.getId());
+        assertThat(result.isPresent()).isFalse();
     }
 
 }

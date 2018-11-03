@@ -10,61 +10,38 @@ import org.springframework.test.util.ReflectionTestUtils;
 import uk.co.mruoc.JacksonConfiguration;
 import uk.co.mruoc.model.FakeWidget;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import static java.util.Collections.*;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
-public class GetWidgetTest {
+public class DeleteWidgetTest {
 
     private final ObjectMapper mapper = JacksonConfiguration.getMapper();
     private final WidgetService service = mock(WidgetService.class);
     private final FakeWidget widget = new FakeWidget();
     private final PathParametersBuilder pathParametersBuilder = new PathParametersBuilder();
 
-    private final GetWidget getWidget = new GetWidget();
+    private final DeleteWidget deleteWidget = new DeleteWidget();
 
     @Before
     public void setUp() {
-        ReflectionTestUtils.setField(getWidget, "mapper", mapper);
-        ReflectionTestUtils.setField(getWidget, "service", service);
+        ReflectionTestUtils.setField(deleteWidget, "mapper", mapper);
+        ReflectionTestUtils.setField(deleteWidget, "service", service);
     }
 
     @Test
-    public void shouldReturnWidget() {
-        given(service.getWidget(widget.getId())).willReturn(Optional.of(widget));
-        final APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent()
-                .withPathParamters(pathParametersBuilder.withId(widget.getId()).build())
-                .withHeaders(emptyMap())
-                .withRequestContext(new ProxyRequestContext());
-        final String expectedBody = widget.asJsonDocument();
-
-        final APIGatewayProxyResponseEvent response = getWidget.apply(request);
-
-        assertThat(response.getStatusCode()).isEqualTo(OK.value());
-        assertThat(response.getBody()).isEqualTo(expectedBody);
-        assertThat(response.getHeaders()).isEmpty();
-    }
-
-    @Test
-    public void shouldReturnErrorIfWidgetNotFound() {
-        given(service.getWidget(widget.getId())).willReturn(Optional.empty());
+    public void shouldDeleteWidget() {
         final APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent()
                 .withPathParamters(pathParametersBuilder.withId(widget.getId()).build())
                 .withHeaders(emptyMap())
                 .withRequestContext(new ProxyRequestContext());
 
-        final APIGatewayProxyResponseEvent response = getWidget.apply(request);
+        final APIGatewayProxyResponseEvent response = deleteWidget.apply(request);
 
-        assertThat(response.getStatusCode()).isEqualTo(NOT_FOUND.value());
-        assertThat(response.getBody()).startsWith("{\"errors\":[{\"id\":\"");
-        assertThat(response.getBody()).endsWith(buildEndOfNotFoundErrorBody(widget.getId()));
+        assertThat(response.getStatusCode()).isEqualTo(NO_CONTENT.value());
+        assertThat(response.getBody()).isEmpty();
         assertThat(response.getHeaders()).isEmpty();
     }
 
@@ -75,16 +52,12 @@ public class GetWidgetTest {
                 .withHeaders(emptyMap())
                 .withRequestContext(new ProxyRequestContext());
 
-        final APIGatewayProxyResponseEvent response = getWidget.apply(request);
+        final APIGatewayProxyResponseEvent response = deleteWidget.apply(request);
 
         assertThat(response.getStatusCode()).isEqualTo(BAD_REQUEST.value());
         assertThat(response.getBody()).startsWith("{\"errors\":[{\"id\":\"");
         assertThat(response.getBody()).endsWith("\",\"code\":\"WIDGET_ID_NOT_PROVIDED\",\"title\":\"widget id must be provided\",\"detail\":\"widget id must be provided\",\"meta\":{}}]}");
         assertThat(response.getHeaders()).isEmpty();
-    }
-
-    private static String buildEndOfNotFoundErrorBody(UUID id) {
-        return String.format("\",\"code\":\"WIDGET_NOT_FOUND\",\"title\":\"no widgets found\",\"detail\":\"no widgets found with id [%s]\",\"meta\":{\"id\":\"%s\"}}]}", id, id);
     }
 
 }

@@ -1,11 +1,12 @@
 package uk.co.mruoc.function;
 
-import org.springframework.http.HttpStatus;
 import uk.co.mruoc.AbstractException;
+
+import static org.springframework.http.HttpStatus.*;
 
 public class InvalidJsonException extends AbstractException {
 
-    private static final int STATUS = HttpStatus.BAD_REQUEST.value();
+    private static final int STATUS = BAD_REQUEST.value();
     private static final String CODE = "INVALID_JSON";
     private static final String TITLE = "json is invalid";
 

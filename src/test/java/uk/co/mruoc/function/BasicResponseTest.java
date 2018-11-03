@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.HttpStatus.*;
 
 public class BasicResponseTest {
 
@@ -24,7 +25,7 @@ public class BasicResponseTest {
 
     @Test
     public void shouldSetStatusCode() {
-        int statusCode = 200;
+        int statusCode = OK.value();
 
         Response<Object> response = BasicResponse.builder()
                 .statusCode(statusCode)

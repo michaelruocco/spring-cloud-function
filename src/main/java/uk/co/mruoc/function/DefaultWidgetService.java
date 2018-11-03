@@ -40,4 +40,9 @@ public class DefaultWidgetService implements WidgetService {
         return repository.findAll(pageable);
     }
 
+    @Override
+    public void deleteWidget(UUID id) {
+        repository.deleteById(id);
+    }
+
 }

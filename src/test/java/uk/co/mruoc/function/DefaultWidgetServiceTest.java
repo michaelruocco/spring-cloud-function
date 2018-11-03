@@ -19,6 +19,7 @@ import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class DefaultWidgetServiceTest {
 
@@ -109,6 +110,13 @@ public class DefaultWidgetServiceTest {
         Page<Widget> widgets = service.getWidgets(pageRequest);
 
         assertThat(widgets).containsExactly(widget1, widget2);
+    }
+
+    @Test
+    public void shouldDeleteWidget() {
+        service.deleteWidget(ID);
+
+        verify(repository).deleteById(ID);
     }
 
 }

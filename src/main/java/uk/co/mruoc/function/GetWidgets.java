@@ -11,6 +11,8 @@ import uk.co.mruoc.Response;
 import uk.co.mruoc.api.WidgetsDocument;
 import uk.co.mruoc.model.Widget;
 
+import static org.springframework.http.HttpStatus.OK;
+
 @Slf4j
 public class GetWidgets extends AbstractAwsLambdaFunction<Object, WidgetsDocument> {
 
@@ -34,7 +36,7 @@ public class GetWidgets extends AbstractAwsLambdaFunction<Object, WidgetsDocumen
 
     private Response<WidgetsDocument> toResponse(Iterable<Widget> widgets) {
         return BasicResponse.<WidgetsDocument>builder()
-                .statusCode(200)
+                .statusCode(OK.value())
                 .body(converter.toDocument(widgets))
                 .build();
     }

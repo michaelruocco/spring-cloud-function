@@ -19,6 +19,9 @@ custom:
     postWidget:
       name: ${self:custom.stage}-postWidget
 
+    deleteWidget:
+      name: ${self:custom.stage}-deleteWidget
+
   dynamoTables:
     widget:
       name: ${self:custom.stage}-widget
@@ -75,6 +78,16 @@ functions:
       - http:
           path: widgets
           method: post
+
+  deleteWidget:
+    environment:
+      FUNCTION_NAME: 'deleteWidget'
+    handler: uk.co.mruoc.CloudHandler
+    name: ${self:custom.lambdas.deleteWidget.name}
+    events:
+      - http:
+          path: widgets/{id}
+          method: delete
 
 resources:
   Resources:

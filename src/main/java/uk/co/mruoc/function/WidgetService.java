@@ -17,4 +17,6 @@ public interface WidgetService {
 
     Page<Widget> getWidgets(Pageable pageable);
 
+    void deleteWidget(UUID id);
+
 }
