@@ -1,13 +1,16 @@
 env=dev
 
+clean:
+	mvn clean
+	docker-compose rm -f
+
 build:
 	mvn clean package
 
 run:
 	make build
-	docker rm -f widget-dynamodb || true
-	docker run --name widget-dynamodb -p 8000:8000 -d amazon/dynamodb-local
-	mvn exec:java
+	docker build -t michaelruocco/widget-app .
+	docker-compose up
 
 deploy:
 	make build

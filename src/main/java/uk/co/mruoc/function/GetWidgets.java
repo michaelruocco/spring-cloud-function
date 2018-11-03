@@ -1,6 +1,5 @@
 package uk.co.mruoc.function;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +13,6 @@ import uk.co.mruoc.model.Widget;
 
 import static org.springframework.http.HttpStatus.OK;
 
-@Slf4j
 public class GetWidgets extends AbstractAwsLambdaFunction<Object, WidgetsDocument> {
 
     private final PageRequestFactory pageRequestFactory = new PageRequestFactory();
@@ -30,7 +28,6 @@ public class GetWidgets extends AbstractAwsLambdaFunction<Object, WidgetsDocumen
     @Override
     public Response<WidgetsDocument> apply(Request<Object> request) {
         final Pageable pageRequest = pageRequestFactory.build(request);
-        log.info("getting page of widgets {}", pageRequest);
         final Page<Widget> widgets = service.getWidgets(pageRequest);
         return toResponse(widgets);
     }

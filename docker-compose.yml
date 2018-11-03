@@ -1,0 +1,10 @@
+version: '2.1'
+services:
+
+  db:
+    image: amazon/dynamodb-local:latest
+
+  app:
+    image: michaelruocco/widget-app:latest
+    ports:
+      - 8080:8080

@@ -52,8 +52,7 @@ running you can do this by running the following command.
 make run
 ```
 
-This will start up a container running dynamodb on port 8000 named widget-dynamodb and the application
-running on port 8080.
+This will start up a two docker containers, one running dynamodb and another running the application on port 8080.
 
 Once the server is up and running you can send requests to it. However, because
 there is no API gateway running on your local machine you have to send a more complex request, because
@@ -86,8 +85,8 @@ Should give a response:
 * Add validation for incoming payload on POST request
 * Add meta information required on page of data items by JSON API
 * Add missing unit test coverage
-* Allow port to be specified when running locally
 * Use docker to run application locally
+* Allow port to be specified when running locally
 * Cucumber tests to be added
 * Tests for AbstractAwsLambdaFunction should be removed and it (along with supporting classes) should be extracted into separate library
 * Secure the API using a cognito user pool

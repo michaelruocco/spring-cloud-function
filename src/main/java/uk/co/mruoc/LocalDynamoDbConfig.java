@@ -36,7 +36,7 @@ public class LocalDynamoDbConfig {
     private static final String REGION = "eu-west-1";
     private static final String STAGE = "local";
 
-    @Value("${aws.dynamodb.endpoint:http://localhost:8000/}")
+    @Value("${aws.dynamodb.endpoint:http://db:8000/}")
     private String endpoint;
 
     @Bean

@@ -3,6 +3,7 @@ package uk.co.mruoc.api;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.money.MonetaryAmount;
 import javax.validation.Valid;
@@ -47,6 +48,7 @@ public class WidgetDocument {
         return data.getAttributes().getPrice();
     }
 
+    @ToString
     public static class WidgetData {
 
         private UUID id;
@@ -72,6 +74,7 @@ public class WidgetDocument {
 
     }
 
+    @ToString
     public static class WidgetAttributes {
 
         @NotNull
