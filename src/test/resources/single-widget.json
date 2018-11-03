@@ -1,0 +1,17 @@
+{
+  "data": {
+    "id": "a99163ea-6e5f-4da1-9e7f-7402f02a675b",
+    "type": "widgets",
+    "attributes": {
+      "description": "widget 1",
+      "cost": {
+        "amount": 8.00,
+        "currency": "GBP"
+      },
+      "price": {
+        "amount": 12.33,
+        "currency": "GBP"
+      }
+    }
+  }
+}

@@ -85,7 +85,6 @@ Should give a response:
 
 * Add validation for incoming payload on POST request
 * Add meta information required on page of data items by JSON API
-* Add functionality for PATCH and DELETE
 * Add missing unit test coverage
 * Allow port to be specified when running locally
 * Use docker to run application locally

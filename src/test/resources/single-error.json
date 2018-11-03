@@ -1,0 +1,14 @@
+{
+  "errors": [
+    {
+      "id": "1fb5b8c6-e4f3-4297-a3aa-156d94a3fc5a",
+      "code": "TEST_CODE_1",
+      "title": "test title 1",
+      "detail": "test detail 1",
+      "meta": {
+        "key1": "value1",
+        "key2": "value2"
+      }
+    }
+  ]
+}

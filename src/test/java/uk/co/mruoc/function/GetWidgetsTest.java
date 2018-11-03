@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.util.ReflectionTestUtils;
 import uk.co.mruoc.JacksonConfiguration;
+import uk.co.mruoc.QueryStringParametersBuilder;
 import uk.co.mruoc.model.FakeWidget;
 
 import java.util.Arrays;

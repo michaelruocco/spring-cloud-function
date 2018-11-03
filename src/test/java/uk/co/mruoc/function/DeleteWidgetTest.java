@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import uk.co.mruoc.JacksonConfiguration;
+import uk.co.mruoc.PathParametersBuilder;
 import uk.co.mruoc.model.FakeWidget;
 
 import static java.util.Collections.emptyMap;
