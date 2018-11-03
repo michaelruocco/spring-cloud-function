@@ -9,11 +9,11 @@ public class UnexpectedErrorException extends AbstractException {
     private static final String TITLE = "an unexpected error occurred";
 
     public UnexpectedErrorException(Throwable cause) {
-        this(cause.getMessage());
+        this(cause, cause.getMessage());
     }
 
-    public UnexpectedErrorException(String detail) {
-        super(STATUS, CODE, TITLE, detail);
+    public UnexpectedErrorException(Throwable cause, String detail) {
+        super(cause, STATUS, CODE, TITLE, detail);
     }
 
 }

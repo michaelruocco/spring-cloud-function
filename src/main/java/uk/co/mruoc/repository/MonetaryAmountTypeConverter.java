@@ -11,7 +11,15 @@ import java.io.IOException;
 
 public class MonetaryAmountTypeConverter implements DynamoDBTypeConverter<String, MonetaryAmount> {
 
-    private ObjectMapper mapper = JacksonConfiguration.getMapper();
+    private final ObjectMapper mapper;
+
+    public MonetaryAmountTypeConverter() {
+        this(JacksonConfiguration.getMapper());
+    }
+
+    public MonetaryAmountTypeConverter(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
 
     @Override
     public String convert(MonetaryAmount money) {

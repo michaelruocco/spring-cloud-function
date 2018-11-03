@@ -85,8 +85,6 @@ Should give a response:
 * Add validation for incoming payload on POST request
 * Add meta information required on page of data items by JSON API
 * Add missing unit test coverage
-* Use docker to run application locally
-* Allow port to be specified when running locally
 * Cucumber tests to be added
 * Tests for AbstractAwsLambdaFunction should be removed and it (along with supporting classes) should be extracted into separate library
 * Secure the API using a cognito user pool
