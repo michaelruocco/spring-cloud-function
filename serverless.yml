@@ -42,6 +42,7 @@ provider:
         - dynamodb:GetItem
         - dynamodb:PutItem
         - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
         - dynamodb:Scan
       Resource: ${self:custom.dynamoTables.widget.arn}
 
