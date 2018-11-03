@@ -1,4 +1,4 @@
-package uk.co.mruoc.function;
+package uk.co.mruoc;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;

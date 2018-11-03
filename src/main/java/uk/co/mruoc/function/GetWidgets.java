@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import uk.co.mruoc.AbstractAwsLambdaFunction;
 import uk.co.mruoc.BasicResponse;
+import uk.co.mruoc.PageRequestFactory;
 import uk.co.mruoc.Request;
 import uk.co.mruoc.Response;
 import uk.co.mruoc.api.WidgetsDocument;

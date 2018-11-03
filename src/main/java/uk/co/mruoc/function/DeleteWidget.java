@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import uk.co.mruoc.AbstractAwsLambdaFunction;
 import uk.co.mruoc.BasicResponse;
+import uk.co.mruoc.IdExtractor;
 import uk.co.mruoc.Request;
 import uk.co.mruoc.Response;
 import java.util.UUID;

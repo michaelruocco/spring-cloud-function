@@ -17,6 +17,7 @@ import java.util.UUID;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -117,6 +118,32 @@ public class DefaultWidgetServiceTest {
         service.deleteWidget(ID);
 
         verify(repository).deleteById(ID);
+    }
+
+    @Test
+    public void shouldUpdateWidget() {
+        Widget inputWidget = mock(Widget.class);
+        Widget originalWidget = mock(Widget.class);
+        Widget updatedWidget = mock(Widget.class);
+        given(originalWidget.update(inputWidget)).willReturn(updatedWidget);
+        given(repository.findById(ID)).willReturn(Optional.of(originalWidget));
+        given(repository.save(updatedWidget)).willReturn(updatedWidget);
+
+        Widget result = service.updateWidget(ID, inputWidget);
+
+        assertThat(result).isEqualTo(updatedWidget);
+    }
+
+    @Test
+    public void shouldThrowExceptionIfWidgetNotFound() {
+        Widget inputWidget = mock(Widget.class);
+        given(repository.findById(ID)).willReturn(Optional.empty());
+
+        Throwable thrown = catchThrowable(() -> service.updateWidget(ID, inputWidget));
+
+        assertThat(thrown)
+                .isInstanceOf(WidgetNotFoundException.class)
+                .hasMessage(String.format("no widgets found with id [%s]", ID));
     }
 
 }

@@ -1,6 +1,7 @@
-package uk.co.mruoc.function;
+package uk.co.mruoc;
 
 import uk.co.mruoc.PathParameterProvider;
+import uk.co.mruoc.function.IdNotProvidedException;
 
 import java.util.Map;
 import java.util.UUID;
