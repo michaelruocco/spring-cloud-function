@@ -43,8 +43,12 @@ public class DefaultWidgetService implements WidgetService {
 
     @Override
     public void deleteWidget(UUID id) {
-        log.info("deleting widget with id {}", id);
-        repository.deleteById(id);
+        if (exists(id)) {
+            log.info("deleting widget with id {}", id);
+            repository.deleteById(id);
+            return;
+        }
+        log.info("widget with id {} not found, skipping delete", id);
     }
 
     @Override

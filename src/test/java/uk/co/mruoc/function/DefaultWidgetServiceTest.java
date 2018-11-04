@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 public class DefaultWidgetServiceTest {
@@ -114,10 +115,21 @@ public class DefaultWidgetServiceTest {
     }
 
     @Test
-    public void shouldDeleteWidget() {
+    public void shouldDeleteWidgetIfWidgetExists() {
+        given(repository.existsById(ID)).willReturn(true);
+
         service.deleteWidget(ID);
 
         verify(repository).deleteById(ID);
+    }
+
+    @Test
+    public void shouldSkipDeleteWidgetIfWidgetExistsDoesNotExist() {
+        given(repository.existsById(ID)).willReturn(false);
+
+        service.deleteWidget(ID);
+
+        verify(repository, never()).deleteById(ID);
     }
 
     @Test
