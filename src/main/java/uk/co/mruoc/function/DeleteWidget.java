@@ -2,7 +2,7 @@ package uk.co.mruoc.function;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import uk.co.mruoc.AbstractAwsLambdaFunction;
+import uk.co.mruoc.AbstractAwsApiGatewayLambdaFunction;
 import uk.co.mruoc.BasicResponse;
 import uk.co.mruoc.IdExtractor;
 import uk.co.mruoc.Request;
@@ -12,7 +12,7 @@ import java.util.UUID;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @Slf4j
-public class DeleteWidget extends AbstractAwsLambdaFunction<Object, Object> {
+public class DeleteWidget extends AbstractAwsApiGatewayLambdaFunction<Object, Object> {
 
     private final IdExtractor idExtractor = new IdExtractor();
 

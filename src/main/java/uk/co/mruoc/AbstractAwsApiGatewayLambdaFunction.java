@@ -13,14 +13,14 @@ import java.io.IOException;
 import java.util.function.Function;
 
 @Slf4j
-public abstract class AbstractAwsLambdaFunction<I, O> implements Function<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+public abstract class AbstractAwsApiGatewayLambdaFunction<I, O> implements Function<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     @Autowired
     private ObjectMapper mapper;
 
     private final Class<I> inputType;
 
-    public AbstractAwsLambdaFunction(Class<I> inputType) {
+    public AbstractAwsApiGatewayLambdaFunction(Class<I> inputType) {
         this.inputType = inputType;
     }
 

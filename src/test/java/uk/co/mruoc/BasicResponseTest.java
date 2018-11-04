@@ -1,8 +1,6 @@
 package uk.co.mruoc;
 
 import org.junit.Test;
-import uk.co.mruoc.BasicResponse;
-import uk.co.mruoc.Response;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +12,9 @@ public class BasicResponseTest {
 
     @Test
     public void shouldSetHeaders() {
-        Map<String, String> headers = new HashMap<>();
+        final Map<String, String> headers = new HashMap<>();
 
-        Response<Object> response = BasicResponse.builder()
+        final Response<Object> response = BasicResponse.builder()
                 .headers(headers)
                 .build();
 
@@ -25,9 +23,9 @@ public class BasicResponseTest {
 
     @Test
     public void shouldSetStatusCode() {
-        int statusCode = OK.value();
+        final int statusCode = OK.value();
 
-        Response<Object> response = BasicResponse.builder()
+        final Response<Object> response = BasicResponse.builder()
                 .statusCode(statusCode)
                 .build();
 
@@ -36,9 +34,9 @@ public class BasicResponseTest {
 
     @Test
     public void shouldSetBody() {
-        Object body = new Object();
+        final Object body = new Object();
 
-        Response<Object> response = BasicResponse.builder()
+        final Response<Object> response = BasicResponse.builder()
                 .body(body)
                 .build();
 
@@ -47,9 +45,38 @@ public class BasicResponseTest {
 
     @Test
     public void shouldPrintFieldsFromToString() {
-        Response<Object> response = BasicResponse.builder().build();
+        final Response<Object> response = BasicResponse.builder().build();
 
         assertThat(response.toString()).isEqualTo("BasicResponse(body=null, statusCode=0, headers={})");
     }
+
+    @Test
+    public void shouldReturnHasHeader() {
+        final Map<String, String> headers = new HeadersBuilder()
+                .withHost("localhost")
+                .build();
+
+        final Response<Object> request = BasicResponse.builder()
+                .headers(headers)
+                .build();
+
+        assertThat(request.hasHeader("Host")).isTrue();
+        assertThat(request.hasHeader("Location")).isFalse();
+    }
+
+    @Test
+    public void shouldReturnHeader() {
+        final String host = "localhost";
+        final Map<String, String> headers = new HeadersBuilder()
+                .withHost(host)
+                .build();
+
+        final Response<Object> request = BasicResponse.builder()
+                .headers(headers)
+                .build();
+
+        assertThat(request.getHeader("Host")).isEqualTo(host);
+    }
+
 
 }

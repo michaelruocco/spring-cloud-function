@@ -1,7 +1,7 @@
 package uk.co.mruoc.function;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import uk.co.mruoc.AbstractAwsLambdaFunction;
+import uk.co.mruoc.AbstractAwsApiGatewayLambdaFunction;
 import uk.co.mruoc.BasicResponse;
 import uk.co.mruoc.HeadersBuilder;
 import uk.co.mruoc.Request;
@@ -15,7 +15,7 @@ import java.util.UUID;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
-public class PostWidget extends AbstractAwsLambdaFunction<WidgetDocument, WidgetDocument> {
+public class PostWidget extends AbstractAwsApiGatewayLambdaFunction<WidgetDocument, WidgetDocument> {
 
     private final HeadersBuilder headersBuilder = new HeadersBuilder();
     private final WidgetConverter converter = new WidgetConverter();
