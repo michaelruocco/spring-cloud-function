@@ -1,5 +1,7 @@
 # Spring Cloud Function
 
+[![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/spring-cloud-function?branch=master)](https://bettercodehub.com/)
+
 This project was created to try out using the spring cloud function framework. I have combined it
 with the serverless framework to create some easily deployable but very simple spring cloud functions
 onto AWS Lambda fronted by the AWS API Gateway.
