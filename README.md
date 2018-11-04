@@ -1,5 +1,6 @@
 # Spring Cloud Function
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8e064126d0b743ce83421a3d6b38c0be)](https://app.codacy.com/app/michaelruocco/spring-cloud-function?utm_source=github.com&utm_medium=referral&utm_content=michaelruocco/spring-cloud-function&utm_campaign=Badge_Grade_Dashboard)
 [![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/spring-cloud-function?branch=master)](https://bettercodehub.com/)
 
 This project was created to try out using the spring cloud function framework. I have combined it
