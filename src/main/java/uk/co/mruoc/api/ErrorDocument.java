@@ -2,7 +2,6 @@ package uk.co.mruoc.api;
 
 import lombok.Getter;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Arrays.asList;
