@@ -33,16 +33,12 @@ public class GetWidget extends AbstractAwsApiGatewayLambdaFunction<Object, Widge
         final UUID id = idExtractor.extract(request);
         log.info("extract id {} from request", id);
         final Optional<Widget> widget = service.getWidget(id);
-        if (widget.isPresent()) {
-            return toResponse(widget.get());
+        if (!widget.isPresent()) {
+            throw new WidgetNotFoundException(id);
         }
-        throw new WidgetNotFoundException(id);
-    }
-
-    private Response<WidgetDocument> toResponse(Widget widget) {
         return BasicResponse.<WidgetDocument>builder()
                 .statusCode(OK.value())
-                .body(converter.toDocument(widget))
+                .body(converter.toDocument(widget.get()))
                 .build();
     }
 

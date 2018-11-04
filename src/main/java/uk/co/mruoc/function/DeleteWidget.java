@@ -28,10 +28,6 @@ public class DeleteWidget extends AbstractAwsApiGatewayLambdaFunction<Object, Ob
         final UUID id = idExtractor.extract(request);
         log.info("extract id {} from request", id);
         service.deleteWidget(id);
-        return toResponse();
-    }
-
-    private Response<Object> toResponse() {
         return BasicResponse.builder()
                 .statusCode(NO_CONTENT.value())
                 .build();

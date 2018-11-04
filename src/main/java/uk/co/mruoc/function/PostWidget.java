@@ -33,13 +33,9 @@ public class PostWidget extends AbstractAwsApiGatewayLambdaFunction<WidgetDocume
         final int statusCode = getStatusCode(widget.getId());
         final Widget createdWidget = service.createWidget(widget);
         final String uri = ResourceUriBuilder.build(request.getUri(), createdWidget.getId());
-        return toResponse(statusCode, createdWidget, uri);
-    }
-
-    private Response<WidgetDocument> toResponse(int statusCode, Widget body, String uri) {
         return BasicResponse.<WidgetDocument>builder()
                 .statusCode(statusCode)
-                .body(converter.toDocument(body))
+                .body(converter.toDocument(createdWidget))
                 .headers(headersBuilder.withLocation(uri).build())
                 .build();
     }

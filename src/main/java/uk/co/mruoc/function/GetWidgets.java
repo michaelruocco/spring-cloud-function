@@ -29,10 +29,6 @@ public class GetWidgets extends AbstractAwsApiGatewayLambdaFunction<Object, Widg
     public Response<WidgetsDocument> apply(Request<Object> request) {
         final Pageable pageRequest = pageRequestFactory.build(request);
         final Page<Widget> widgets = service.getWidgets(pageRequest);
-        return toResponse(widgets);
-    }
-
-    private Response<WidgetsDocument> toResponse(Iterable<Widget> widgets) {
         return BasicResponse.<WidgetsDocument>builder()
                 .statusCode(OK.value())
                 .body(converter.toDocument(widgets))

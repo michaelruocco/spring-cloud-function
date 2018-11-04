@@ -33,13 +33,9 @@ public class PatchWidget extends AbstractAwsApiGatewayLambdaFunction<WidgetDocum
         log.info("extract id {} from request", id);
         final Widget widget = converter.toModel(request.getBody());
         final Widget updatedWidget = service.updateWidget(id, widget);
-        return toResponse(updatedWidget);
-    }
-
-    private Response<WidgetDocument> toResponse(Widget body) {
         return BasicResponse.<WidgetDocument>builder()
                 .statusCode(OK.value())
-                .body(converter.toDocument(body))
+                .body(converter.toDocument(updatedWidget))
                 .build();
     }
 
