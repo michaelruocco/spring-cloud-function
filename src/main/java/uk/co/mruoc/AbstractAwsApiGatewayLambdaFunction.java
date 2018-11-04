@@ -27,20 +27,28 @@ public abstract class AbstractAwsApiGatewayLambdaFunction<I, O> implements Funct
     @Override
     public APIGatewayProxyResponseEvent apply(APIGatewayProxyRequestEvent requestEvent) {
         try {
-            log.info("api gateway proxy request event received {}", requestEvent);
-            Request<I> request = toRequest(requestEvent);
-            log.info("processing request {}", request);
-            Response<O> response = apply(request);
-            log.info("response returned {}", response);
-            APIGatewayProxyResponseEvent responseEvent = toEvent(response);
-            log.info("api gateway proxy response event returned {}", responseEvent);
-            return responseEvent;
+            return handle(requestEvent);
         } catch (AbstractException e) {
-            log.info("handling error {}", e.getMessage(), e);
-            APIGatewayProxyResponseEvent responseEvent = toEvent(e);
-            log.info("api gateway proxy response event returned {}", responseEvent);
-            return responseEvent;
+            return handle(e);
         }
+    }
+
+    private APIGatewayProxyResponseEvent handle(APIGatewayProxyRequestEvent event) {
+        log.info("api gateway proxy request event received {}", event);
+        Request<I> request = toRequest(event);
+        log.info("processing request {}", request);
+        Response<O> response = apply(request);
+        log.info("response returned {}", response);
+        APIGatewayProxyResponseEvent responseEvent = toEvent(response);
+        log.info("api gateway proxy response event returned {}", responseEvent);
+        return responseEvent;
+    }
+
+    private APIGatewayProxyResponseEvent handle(AbstractException e) {
+        log.info("handling error {}", e.getMessage(), e);
+        APIGatewayProxyResponseEvent responseEvent = toEvent(e);
+        log.info("api gateway proxy response event returned {}", responseEvent);
+        return responseEvent;
     }
 
     public abstract Response<O> apply(Request<I> request);

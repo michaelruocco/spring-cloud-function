@@ -86,6 +86,7 @@ Should give a response:
 * Add validation for incoming payload on POST request
 * Add meta information required on page of data items by JSON API
 * Migrate to gradle
+* Add travis build pipeline
 * Cucumber tests to be added
 * Tests for AbstractAwsApiGatewayLambdaFunction should be removed and it (along with supporting classes) should be extracted into separate library
 * Secure the API using a cognito user pool
