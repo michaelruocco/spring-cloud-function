@@ -34,7 +34,7 @@ public class LocalDynamoRule extends ExternalResource {
         try {
             dynamoDbServer.stop();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new LocalDynamoRuleException(e);
         }
     }
 
