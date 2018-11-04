@@ -48,7 +48,7 @@ public class WidgetRepositoryTest {
     private WidgetRepository repository;
 
     @Before
-    public void setup() {
+    public void setUp() {
         DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(amazonDynamoDB, dynamoDBMapperConfig);
 
         CreateTableRequest request = dynamoDBMapper.generateCreateTableRequest(Widget.class);

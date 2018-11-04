@@ -12,7 +12,7 @@ The instructions below assume that you already have the Serverless framework con
 with your AWS account, instructions for doing this can be found
 [here](https://serverless.com/framework/docs/providers/aws/guide/installation/).
 
-```
+```make
 make deploy
 ```
 
@@ -85,10 +85,10 @@ Should give a response:
 
 ## Things still to do
 
-* Add validation for incoming payload on POST request
-* Add meta information required on page of data items by JSON API
-* Migrate to gradle
-* Add travis build pipeline
-* Cucumber tests to be added
-* Tests for AbstractAwsApiGatewayLambdaFunction should be removed and it (along with supporting classes) should be extracted into separate library
-* Secure the API using a cognito user pool
+  * Add validation for incoming payload on POST request
+  * Add meta information required on page of data items by JSON API
+  * Migrate to gradle
+  * Add travis build pipeline
+  * Cucumber tests to be added
+  * Tests for AbstractAwsApiGatewayLambdaFunction should be removed and it (along with supporting classes) should be extracted into separate library
+  * Secure the API using a cognito user pool
